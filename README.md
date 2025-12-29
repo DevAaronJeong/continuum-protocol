@@ -18,8 +18,8 @@ We are moving from **Static Matching** to **Dynamic Alignment**.
 
 ```mermaid
 graph LR
-    A[Person Vector<br/>(Energy, Focus, Social)] --> C{Alignment Engine}
-    B[Work Vector<br/>(Sprint, Async, Chaos)] --> C
+    A["Person Vector<br/>(Energy, Focus, Social)"] --> C{Alignment Engine}
+    B["Work Vector<br/>(Sprint, Async, Chaos)"] --> C
     C -->|Calculate Cosine Similarity| D[Compatibility Score]
     D -->|High Alignment| E[Flow State 🌊]
     D -->|Low Alignment| F[Burnout / Boredom 📉]
