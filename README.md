@@ -92,39 +92,53 @@ We are currently debating which license best protects this mission (e.g., Hippoc
 ---
 
 ## 📂 Repository Structure
-
 ```
 continuum-protocol/
 ├── README.md                  # You are here
 ├── MANIFESTO.md              # Core philosophy
 ├── docs/
-│   ├── ethics-privacy.md     # Privacy principles
-│   ├── why-not-job-board.md  # What makes this different
-│   ├── open-questions.md
-│   └── roadmap.md            # Where we're going
-├── src/
-│   ├── prototype.py          # Minimal vector matching demo
-│   └── lifestyle_vector.py   # Core data model
-└── examples/
-    ├── synthetic_data.py
-    └── simple_match.py       # Basic usage example
+│   ├── ethics-privacy.md     # Privacy & ethical principles
+│   ├── why-not-job-board.md  # How this differs from job boards
+│   ├── open-questions.md     # Unresolved questions (help us!)
+│   └── roadmap.md            # Future direction
+├── examples/
+│   ├── simple_match.py       # Quick demo (run this first!)
+│   └── synthetic_data.py     # Generate test data
+└── src/
+    └── prototype.py          # Core matching logic
 ```
 
 ---
 
 ## 🚀 Quick Start
 
+### Try the Demo
 ```bash
 # Clone the repo
 git clone https://github.com/DevAaronJeong/continuum-protocol.git
 cd continuum-protocol
 
-# Run the prototype
-python src/prototype.py
-
-# Explore examples
+# Run the simple matching example
 python examples/simple_match.py
+
+# Generate synthetic data
+python examples/synthetic_data.py
 ```
+
+### Read the Docs
+
+📖 **New to the project?**
+1. Start with [MANIFESTO.md](MANIFESTO.md) - Core philosophy
+2. Read [docs/why-not-job-board.md](docs/why-not-job-board.md) - How this is different
+3. Check [docs/ethics-privacy.md](docs/ethics-privacy.md) - Privacy principles
+
+🤔 **Have concerns or questions?**
+- See [docs/open-questions.md](docs/open-questions.md)
+- Open an issue tagged `philosophy` or `ethics`
+
+🛠️ **Want to contribute?**
+- Read [CONTRIBUTING.md](CONTRIBUTING.md)
+- Check [docs/roadmap.md](docs/roadmap.md)
 
 ---
 
@@ -141,6 +155,12 @@ A: Not yet. This is experimental research. Use at your own risk.
 
 **Q: What's the license?**  
 A: Under discussion. We want to prevent surveillance use while keeping it open.
+
+**Q: Where should I start?**  
+A: Read [MANIFESTO.md](MANIFESTO.md) first, then explore [docs/](docs/).
+
+**Q: Can I try this now?**  
+A: Yes! Run `python examples/simple_match.py` to see the basic concept.
 
 ---
 
