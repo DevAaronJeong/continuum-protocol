@@ -2,6 +2,8 @@
 
 **Aligning people and work by rhythm, not resumes.**
 
+[![Korean](https://img.shields.io/badge/Language-Korean-blue.svg)](README.kr.md)
+
 `continuum-protocol` is an open-source experiment that explores how people and work can align through lifestyle, rhythm, and consistency — without ranking jobs, people, or careers.
 
 We treat work not as a fixed identity, but as a temporary role within a person’s life continuum.
