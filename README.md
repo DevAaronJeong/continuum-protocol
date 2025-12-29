@@ -20,7 +20,7 @@ We are moving from **Static Matching** to **Dynamic Alignment**.
 graph LR
     A["Person Vector<br/>(Energy, Focus, Social)"] --> C{Alignment Engine}
     B["Work Vector<br/>(Sprint, Async, Chaos)"] --> C
-    C -->|Calculate Cosine Similarity| D[Compatibility Score]
+    C -->|Measure Distance| D[Alignment Score 0-1]
     D -->|High Alignment| E[Flow State 🌊]
     D -->|Low Alignment| F[Burnout / Boredom 📉]
 ```
@@ -28,13 +28,16 @@ graph LR
 (Note: GitHub supports Mermaid diagrams natively now. If it doesn't render, we use ASCII below)
 
 ```
-       Person (P)        Alignment (θ)         Work (W)
-      [ Energy ]           /                 [ Sprint ]
-      [ Focus  ]  ------> (   Angle   ) <------ [ Async  ]
-      [ Social ]           \                 [ Chaos  ]
+       Person (P)           Match Quality          Work (W)
+      [ Energy ]                 |                [ Sprint ]
+      [ Focus  ]  ------------> [0-1] <----------- [ Async  ]
+      [ Social ]                 |                [ Chaos  ]
       
-      Success != Long Tenure
-      Success == High Alignment (cos θ ≈ 1)
+      1.0 = Perfect alignment right now
+      0.0 = Complete mismatch
+      
+      Success != Long employment
+      Success == Good fit at this moment
 ```
 
 ---

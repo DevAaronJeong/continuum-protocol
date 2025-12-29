@@ -25,6 +25,34 @@
 
 ---
 
+## 🌊 The Concept Visualized
+
+We are moving from **Static Matching** to **Dynamic Alignment**.
+
+```mermaid
+graph LR
+    A["Person Vector<br/>(Energy, Focus, Social)"] --> C{Alignment Engine}
+    B["Work Vector<br/>(Sprint, Async, Chaos)"] --> C
+    C -->|Measure Distance| D[Alignment Score 0-1]
+    D -->|High Alignment| E[Flow State 🌊]
+    D -->|Low Alignment| F[Burnout / Boredom 📉]
+```
+
+(Note: GitHub supports Mermaid diagrams natively now. If it doesn't render, we use ASCII below)
+
+```
+       사람 (P)              매칭 품질              일 (W)
+      [ 에너지 ]                |                [ 스프린트 ]
+      [ 집중력 ]  ------------> [0-1] <----------- [ 비동기 ]
+      [ 사교성 ]                |                [ 변동성 ]
+      
+      1.0 = 지금 이 순간 완벽한 정렬
+      0.0 = 완전한 불일치
+      
+      성공 != 장기 고용
+      성공 == 이 순간의 좋은 조화
+```
+
 ## 📐 수학적 모델 (개념적)
 
 **중요:** 이 시스템은 코사인 유사도가 아닌, 가중치 기반 거리 측정을 사용합니다.
