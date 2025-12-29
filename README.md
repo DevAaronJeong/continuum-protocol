@@ -28,6 +28,8 @@ Where:
 
 We are actively looking for the right parameters to populate this function.
 
+(See `src/prototype.py` for a basic Python implementation of this vector logic.)
+
 ---
 
 ## Core Ideas
