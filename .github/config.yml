@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Read the Docs First
+    url: https://github.com/DevAaronJeong/continuum-protocol/tree/main/docs
+    about: Check our documentation before opening an issue
+  - name: 💬 GitHub Discussions
+    url: https://github.com/DevAaronJeong/continuum-protocol/discussions
+    about: For open-ended conversations and brainstorming
