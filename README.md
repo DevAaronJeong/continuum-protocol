@@ -77,6 +77,10 @@ The key insight: Alignment is calculated at a specific moment $t$, acknowledging
 
 ---
 
+🧠 **Deep Dive:** Why do we use Manhattan Distance? Read our [Technical Philosophy](docs/technical-philosophy.md) on why we match "Speed", not "Words".
+
+---
+
 ## 🧘 Manifesto & Philosophy
 
 1. **Lifestyle has no hierarchy.** (Night owls $\neq$ Lazy)
