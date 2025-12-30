@@ -54,6 +54,84 @@ People and organizations change over time.
 
 ---
 
+### Which distance metric best captures "fit"?
+
+**Current implementation:** Weighted Manhattan Distance
+
+We chose Manhattan Distance because:
+- It respects magnitude differences (0.9 ≠ 0.3)
+- Each dimension contributes independently
+- Easy to explain ("you differ by 0.6 on this dimension")
+- Simple to weight dimensions differently
+
+**But we don't know if this matches human perception of "fit".**
+
+**Alternative approaches to consider:**
+
+| Metric | What it measures | Pros | Cons |
+|--------|------------------|------|------|
+| **Manhattan Distance** (current) | Sum of absolute differences | Interpretable, tunable | May not penalize large mismatches enough |
+| **Euclidean Distance** | Geometric straight-line distance | Penalizes large mismatches more heavily | Less interpretable |
+| **Cosine Similarity** | Direction/pattern similarity | Good for finding similar patterns | Ignores magnitude (0.9 vs 0.3 treated as "same direction") |
+| **Mahalanobis Distance** | Accounts for correlation between dimensions | Statistically sophisticated | Requires correlation data, harder to explain |
+
+**Open questions:**
+
+1. **Does Manhattan Distance capture the subjective "느낌" (feeling) of fit?**
+   - When someone says "this job feels right," what are they actually sensing?
+   - Is it the sum of small differences? Or are large mismatches in one dimension dealbreakers?
+
+2. **Should different dimensions use different metrics?**
+   - Energy rhythm: Maybe absolute difference matters (Manhattan)
+   - Communication style: Maybe pattern matters more (Cosine)
+   - Intensity: Maybe large mismatches should be heavily penalized (Euclidean)
+
+3. **Can we learn the "right" metric from user feedback?**
+   - Collect: "How well did this match work out?"
+   - Reverse-engineer: "What distance function predicts satisfaction best?"
+
+4. **Are there cultural differences in how "fit" is perceived?**
+   - Western individualism vs. Eastern collectivism
+   - Different professional cultures (tech vs. academia vs. healthcare)
+
+**Why this matters:**
+
+The choice of distance metric is not just mathematical—it's **philosophical**.
+- It defines what we mean by "similar lifestyles"
+- It determines which mismatches are tolerable vs. dealbreaking
+- It affects whether the system feels accurate or arbitrary to users
+
+**Experiment ideas:**
+
+1. **A/B test different metrics** with synthetic data, ask users which rankings "feel right"
+2. **Interview people** about past job matches: "What made it work/not work?"
+3. **Collect mismatch stories:** When did a small difference matter a lot? When did a large difference not matter?
+
+**We need your input:**
+- Have you experienced a job that "should have" matched but didn't? Or vice versa?
+- What factors made the biggest difference in your subjective sense of fit?
+- Do you think patterns matter more than magnitudes, or vice versa?
+
+---
+
+### Is there a "best" representation of lifestyle rhythms?
+
+Currently we use vectors with normalized [0, 1] values.
+
+But maybe:
+- **Categorical** is more honest? ("morning person" vs. "evening person", not 0.9 vs 0.1)
+- **Probabilistic** is more accurate? ("60% chance I prefer mornings, 40% evenings")
+- **Time-series** captures reality better? (actual activity logs over weeks)
+- **Narrative** descriptions preserve nuance that numbers lose?
+
+**Tension:**
+- Numbers enable computation and comparison
+- But lived experience is not reducible to numbers
+
+Can we find middle ground?
+
+---
+
 ## 2. Ethics & Privacy
 
 ### Can lifestyle profiling ever be non-invasive?
