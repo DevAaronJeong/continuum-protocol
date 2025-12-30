@@ -56,6 +56,8 @@ People and organizations change over time.
 
 ### Which distance metric best captures "fit"?
 
+**This section explores whether mathematical distance metrics can approximate the human feeling of "this fits my life."**
+
 **Current implementation:** Weighted Manhattan Distance
 
 We chose Manhattan Distance because:
@@ -65,6 +67,8 @@ We chose Manhattan Distance because:
 - Simple to weight dimensions differently
 
 **But we don't know if this matches human perception of "fit".**
+
+By "fit," we mean **a state where work does not require continuous self-adjustment** — where your natural rhythms can persist without constant adaptation.
 
 **Alternative approaches to consider:**
 
@@ -77,9 +81,10 @@ We chose Manhattan Distance because:
 
 **Open questions:**
 
-1. **Does Manhattan Distance capture the subjective "느낌" (feeling) of fit?**
-   - When someone says "this job feels right," what are they actually sensing?
-   - Is it the sum of small differences? Or are large mismatches in one dimension dealbreakers?
+1. **When someone says "this job feels right," what are they actually sensing?**
+   - Is it the absence of friction across many small dimensions?
+   - Or the absence of one dealbreaking mismatch?
+   - Does "feeling right" emerge immediately, or over time?
 
 2. **Should different dimensions use different metrics?**
    - Energy rhythm: Maybe absolute difference matters (Manhattan)
