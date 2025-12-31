@@ -236,6 +236,7 @@ Please open an issue. Critique is more valuable than praise.
 1. Start with [MANIFESTO.md](MANIFESTO.md) - Core philosophy
 2. Read [docs/why-not-job-board.md](docs/why-not-job-board.md) - How this is different
 3. Check [docs/ethics-privacy.md](docs/ethics-privacy.md) - Privacy principles
+4. Explore [docs/fit-as-stability.md](docs/fit-as-stability.md) - Theory of fit as temporal stability, not snapshot alignment
 
 🤔 **Have concerns or questions?**
 - See [docs/open-questions.md](docs/open-questions.md)

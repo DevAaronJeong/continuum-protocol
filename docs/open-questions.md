@@ -78,8 +78,8 @@ People and organizations change over time.
 **Why this matters:**
 Shifts goal from "finding perfect match" to "finding stable system where friction dampens out."
 
-👉 **Full mathematical treatment:** [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7)
-👉 **Detailed explanation:** [Technical Philosophy - Dynamic Stability](../technical-philosophy.md#from-static-distance-to-dynamic-stability)
+👉 **Detailed theory:** [fit-as-stability.md](fit-as-stability.md)
+👉 **Quick overview:** [Technical Philosophy - Dynamic Stability](../technical-philosophy.md#from-static-distance-to-dynamic-stability)
 
 ---
 

@@ -252,7 +252,7 @@ Where small mismatches dampen out instead of exploding.
 
 ### Further Reading
 
-See the full mathematical treatment in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7).
+👉 **Full treatment:** See [fit-as-stability.md](fit-as-stability.md) for detailed mathematical model and measurement protocols.
 
 ---
 
