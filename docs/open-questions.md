@@ -54,6 +54,35 @@ People and organizations change over time.
 
 ---
 
+### Is "fit" a property or a dynamic?
+
+*Insight from [@mwdelaney1325-cmd](https://github.com/DevAaronJeong/continuum-protocol/discussions/7)*
+
+**Current approach:** Static alignment (Manhattan Distance at $t=0$)
+- "Are we walking at the same speed right now?"
+
+**Alternative model:** Dynamic stability (Control Theory)
+- "Do I need to run faster each day just to keep up?"
+
+**The hypothesis:**
+- **Good fit:** Adjustment demands ($s_j$) stay bounded: $|s_j| \le C$
+- **Bad fit:** Adjustment demands grow over time: $|s_j|$ increases
+
+**This reframes burnout** not as "high effort" but as "unbounded acceleration in effort."
+
+**Open questions:**
+1. Can Manhattan Distance predict long-term stability ($s_j$ behavior)?
+2. How do we measure adjustment acceleration in practice?
+3. What's the "settling period" duration?
+
+**Why this matters:**
+Shifts goal from "finding perfect match" to "finding stable system where friction dampens out."
+
+👉 **Full mathematical treatment:** [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7)
+👉 **Detailed explanation:** [Technical Philosophy - Dynamic Stability](../technical-philosophy.md#from-static-distance-to-dynamic-stability)
+
+---
+
 ### Which distance metric best captures "fit"?
 
 **This section explores whether mathematical distance metrics can approximate the human feeling of "this fits my life."**

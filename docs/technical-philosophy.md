@@ -166,6 +166,96 @@ This is why:
 
 ---
 
+## From Static Distance to Dynamic Stability
+
+*Community contribution by [@mwdelaney1325-cmd](https://github.com/DevAaronJeong/continuum-protocol/discussions/7)*
+
+### The Core Insight
+
+Our current model treats alignment as a **static property**:
+```
+alignment = 1 - Σ|person - work|  (Manhattan Distance at t=0)
+```
+
+But [@mwdelaney1325-cmd](https://github.com/DevAaronJeong/continuum-protocol/discussions/7) proposed reframing "fit" as a **dynamic stability question**.
+
+### Mathematical Formulation
+
+Let $i \in \mathbb{N}$ index work episodes (days, meetings, tasks).
+
+Define:
+- $K(i) \in \mathbb{Q}$ = work-state readout
+- $L(i) := \lfloor K(i) \rfloor \in \mathbb{Z}_{\geq 0}$ = integer-grain readout
+- $a_1 < a_2 < a_3 < \cdots$ = sequence of first-time-seen readout levels
+- $\Delta_j := a_{j+1} - a_j$ = step size between new states
+- $s_j := \Delta_{j+1} - \Delta_j$ = change in step size (acceleration)
+
+### What "Fit" Means in This Model
+
+**Good Fit (Stable System):**
+$$\exists C < \infty \text{ such that } |s_j| \le C \text{ (after initial settling)}$$
+
+Adjustment demands stay bounded—friction dampens out.
+
+**Bad Fit (Unstable System):**
+$$|s_j| \text{ grows with } j$$
+
+Adjustment demands compound—friction amplifies.
+
+### Redefining Burnout
+
+This model reframes **burnout** not as:
+- ❌ High effort
+- ❌ Long hours
+- ❌ Stress
+
+But as:
+- ✅ **Unbounded acceleration in self-correction**
+
+Burnout is when you need to "run faster each day just to stay in place."
+
+### Connection to Current Model
+
+Our Manhattan Distance approach asks:
+> "Are we walking at the same speed right now?"
+
+The dynamic stability model asks:
+> "Do I need to run faster each day just to keep up?"
+
+The second question is closer to the subjective reality of sustainable work.
+
+### Open Questions
+
+1. **Can Manhattan Distance predict $s_j$ behavior?**
+   - Does large initial distance → unbounded $s_j$?
+   - Or does small persistent distance → unbounded $s_j$?
+
+2. **How do we measure this in practice?**
+   - Track weekly: "How much did you have to adjust today?"
+   - Plot $s_j$ over time
+   - Define "settling period" duration
+
+3. **Does this model generalize across domains?**
+   - Tech vs. healthcare vs. education
+   - Different work cultures
+   - Individual vs. team dynamics
+
+### Why This Matters
+
+This shifts our goal from:
+- ❌ "Finding the perfect match" (static optimization)
+
+To:
+- ✅ "Finding a stable system" (dynamic stability)
+
+Where small mismatches dampen out instead of exploding.
+
+### Further Reading
+
+See the full mathematical treatment in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7).
+
+---
+
 ## Open Questions
 
 We're still exploring:
