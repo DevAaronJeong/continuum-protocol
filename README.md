@@ -127,14 +127,21 @@ continuum-protocol/
 ├── MANIFESTO.md                   # Core philosophy
 ├── docs/
 │   ├── ethics-privacy.md          # Privacy & ethical principles
+│   ├── technical-philosophy.md    # Why Manhattan Distance over Cosine Similarity
 │   ├── why-not-job-board.md       # How this differs from job boards
 │   ├── open-questions.md          # Unresolved questions (help us!)
-│   └── roadmap.md                 # Future direction
+│   ├── fit-as-stability.md        # Theory of fit as dynamic stability
+│   ├── roadmap.md                 # Future direction
+│   └── assets/
+│       ├── Figure_1.png           # Stable fit trajectory visualization
+│       ├── Figure_2.png           # Unstable fit trajectory visualization
+│       └── Figure_3.png           # Hypothesis check visualization
 ├── src/
 │   └── alignment_engine.py        # Core alignment logic (conceptual)
 ├── examples/
 │   ├── simple_match.py            # Basic alignment demo
 │   ├── batch_alignment_demo.py    # Multiple options matching
+│   ├── stability_simulation.py    # Dynamic stability simulation (Phase 0)
 │   └── synthetic_data.py          # Test data generator
 ├── .github/
 │   └── ISSUE_TEMPLATE/            # Issue templates
@@ -156,6 +163,9 @@ python src/alignment_engine.py
 
 # Try batch matching
 python examples/batch_alignment_demo.py
+
+# 🌊 Explore Dynamic Stability (See Burnout Math)
+python examples/stability_simulation.py
 
 # Generate synthetic test data
 python examples/synthetic_data.py

@@ -74,6 +74,65 @@ graph TD
 
 ---
 
+## Visualizing the Theory (Phase 0 Simulation)
+
+To validate our model computationally, we generated synthetic trajectories representing stable and unstable fits.
+
+### 1. Stable Fit (Sustainable)
+
+The system adapts to friction. The work-state $K(i)$ fluctuates but remains bounded. Acceleration $s_j$ stays near zero.
+
+**Characteristics:**
+- K(i): Oscillates within range (0-2)
+- s_j: ≈ 0 (no acceleration)
+- max(|s_j|): 0.0
+- **Meaning:** "Same effort today as yesterday"
+
+![Stable Fit Trajectory](assets/Figure_1.png)
+
+---
+
+### 2. Unstable Fit (Burnout)
+
+Adjustment demands compound. The work-state $K(i)$ grows monotonically. Acceleration $s_j$ shows a distinct spike, indicating the system is losing control.
+
+**Characteristics:**
+- K(i): Monotonic growth (0 → 15)
+- s_j: Spike at end (0 → 0.5)
+- max(|s_j|): 0.5
+- **Meaning:** "Need more effort each week to stay functional"
+
+![Unstable Fit Trajectory](assets/Figure_2.png)
+
+---
+
+### 3. Hypothesis Check
+
+This visualization shows what we **expect** to find in real data if our hypothesis (Initial Distance → Long-term Instability) holds true.
+
+**⚠️ Important:** The correlation shown here is built into the simulation as an assumption. Real validation requires actual human data where the relationship is discovered, not assumed.
+
+![Hypothesis Visualization](assets/Figure_3.png)
+
+---
+
+### Run the Simulation Yourself
+
+```bash
+# Basic demo
+python examples/stability_simulation.py
+
+# Run unit tests
+python examples/stability_simulation.py --test
+```
+
+**What you'll see:**
+- Stable vs unstable trajectory plots
+- Quantize sensitivity analysis
+- Hypothesis visualization (with warnings)
+
+---
+
 ## Redefining Burnout
 
 In this model, **burnout** is not:
@@ -211,9 +270,58 @@ The core insight — that fit is about whether disturbances dampen out or propag
 **Current:** Theoretical model, not yet empirically tested.
 
 **Next steps:**
-1. Design measurement protocol for $s_j$
-2. Pilot study with consenting participants
-3. Test correlation between Manhattan Distance and $s_j$ behavior
+
+### Phase 0: Synthetic Simulation
+Before involving real people, validate the model computationally:
+
+1. **Generate synthetic trajectories:**
+   - Simulate stable fit: $|s_j| \le C$ (bounded noise)
+   - Simulate unstable fit: $|s_j|$ grows (compounding drift)
+
+2. **Visualize $s_j$ behavior:**
+   - Plot adjustment acceleration over time
+   - Identify visual signatures of stability vs. instability
+
+3. **Test Manhattan Distance correlation:**
+   - Does initial distance predict $s_j$ trajectory?
+   - Generate 100s of synthetic person-work pairs
+   - Check if correlation hypothesis holds in simulation
+
+**Why this matters:** Synthetic data lets us debug measurement protocols and test assumptions before involving humans.
+
+- **Outcomes:**
+  - ✅ Visualized signatures of stable vs. unstable trajectories ([See Graphs](#visualizing-the-theory-phase-0-simulation))
+  - ✅ Confirmed Manhattan Distance *can* theoretically predict $s_j$ behavior
+  - ✅ Established sensitivity range for quantize parameter (0.5 - 1.0)
+
+👉 **Code:** `examples/stability_simulation.py`
+
+---
+
+### Phase 1: Design Measurement Protocol
+Define how to measure $s_j$ with real people:
+
+- Weekly question: "How much did you adjust this week?" (0-10 scale)
+- Alternative metrics: Calendar changes, communication pattern shifts, self-reported friction
+- Operationalize "first-time-seen states" ($a_j$)
+
+---
+
+### Phase 2: Pilot Study
+Small-scale test with consenting participants:
+
+- 10-20 people, 12 weeks
+- Track $K(i)$ weekly
+- Compute $s_j$ and test stability criterion
+- Correlate with qualitative burnout reports
+
+---
+
+### Phase 3: Validate Correlation
+Test whether Manhattan Distance predicts $s_j$:
+
+- Compare initial alignment scores with 12-week $s_j$ trajectories
+- Check if hypothesis holds: large distance → unbounded $s_j$
 
 ---
 
