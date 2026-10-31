@@ -8,17 +8,20 @@ Do not change the primary check, the exclusions, or the reading rules after
 the survey opens. Anything added later must be labelled exploratory.
 
 Usage:
-    python examples/survey_analysis.py data/survey_responses.csv
+    python examples/survey_analysis.py data/survey_ko.csv data/survey_en.csv   # Google Forms exports
     python examples/survey_analysis.py --demo              # made-up data, fit follows Manhattan
     python examples/survey_analysis.py --demo cosine       # made-up data, fit follows cosine
     python examples/survey_analysis.py --demo none         # made-up data, fit is random
     python examples/survey_analysis.py --test              # unit tests
 
-Columns: see docs/experiments/retrospective-fit-survey.md ("CSV columns").
+The Google Forms CSV export can be used as is: column titles are matched to
+question IDs using the QUESTIONS list in examples/survey_forms.gs (the script
+that creates the forms). A CSV whose columns are already named by ID also works.
 Energy answers may be in English or Korean.
 """
 
 import csv
+import json
 import os
 import random
 import sys
@@ -32,6 +35,7 @@ sys.path.insert(0, os.path.join(ROOT, 'examples'))
 
 from metric_comparison import ENERGY_CODE, METRICS, WEIGHTS, spearman  # noqa: E402
 
+FORMS_SCRIPT = os.path.join(ROOT, 'examples', 'survey_forms.gs')
 SEED = 2026
 N_BOOT = 5000
 DIMS = ["energy", "flex", "people", "change", "pace"]
@@ -77,9 +81,27 @@ def parse_consent(value: str) -> bool:
     return v not in {"", "false", "no", "0", "아니요", "아니오", "n"}
 
 
+def load_questions(path: str = FORMS_SCRIPT) -> List[Dict]:
+    """Read the QUESTIONS list from the Apps Script that creates the forms."""
+    text = open(path, encoding="utf-8").read()
+    block = text.split("// BEGIN QUESTIONS", 1)[1].split("// END QUESTIONS", 1)[0]
+    return json.loads(block[block.index("["):block.rindex("]") + 1])
+
+
+def title_to_id(questions: List[Dict]) -> Dict[str, str]:
+    mapping = {}
+    for q in questions:
+        for lang in ("ko", "en"):
+            mapping[q[lang].strip()] = q["id"]
+    return mapping
+
+
 def load_rows(path: str) -> List[Dict[str, str]]:
+    """Load a CSV, renaming Google Forms question titles to question IDs."""
+    mapping = title_to_id(load_questions())
     with open(path, newline="", encoding="utf-8-sig") as f:
-        return list(csv.DictReader(f))
+        rows = list(csv.DictReader(f))
+    return [{mapping.get((k or "").strip(), (k or "").strip()): v for k, v in r.items()} for r in rows]
 
 
 # ============================================================================
@@ -228,6 +250,26 @@ def within_person(pairs) -> Dict[str, Tuple[int, int]]:
     return out
 
 
+NETWORK_SOURCES = {"지인이 직접 보내줌", "a friend sent it to me"}
+
+
+def by_channel(pairs, rows) -> Dict[str, Tuple[float, float, int]]:
+    """Secondary: does the result differ between people reached through friends and online?"""
+    groups: Dict[str, List] = {"friends": [], "online": []}
+    for p in pairs:
+        src = (rows[p[0]].get("source") or "").strip().lower()
+        if not src:
+            continue
+        groups["friends" if src in NETWORK_SOURCES else "online"].append(p)
+    out = {}
+    for name, ps in groups.items():
+        if len(ps) >= 15:
+            out[name] = (rho(ps, "manhattan"), rho(ps, "cosine"), len(ps))
+        else:
+            out[name] = (float("nan"), float("nan"), len(ps))
+    return out
+
+
 def exploratory(pairs) -> Dict:
     X = np.array([p[1] for p in pairs])
     Y = np.array([p[2] for p in pairs])
@@ -278,6 +320,10 @@ def report(rows, n_boot: int = N_BOOT) -> Dict:
     for m, (agree, n) in wp.items():
         share = f"{agree / n:.0%}" if n else "n/a"
         print(f"    {m:<16} higher score = higher fit in {agree}/{n} ({share})")
+    print("  By channel (groups under 15 pairs are not computed):")
+    for name, (r_m, r_c, n) in by_channel(pairs, rows).items():
+        shown = f"Manhattan {r_m:+.2f}, cosine {r_c:+.2f}" if n >= 15 else "too few"
+        print(f"    {name:<8} {n:3d} pairs   {shown}")
 
     ex = exploratory(pairs)
     print("\nEXPLORATORY  (no conclusions)")
@@ -395,8 +441,48 @@ def test_pipeline_recovers_the_truth():
     print("✅ test_pipeline_recovers_the_truth passed")
 
 
+def test_forms_script_matches_analysis():
+    qs = load_questions()
+    ids = [q["id"] for q in qs]
+    assert len(ids) == len(set(ids)), "duplicate IDs"
+    for lang in ("ko", "en"):
+        titles = [q[lang] for q in qs]
+        assert len(titles) == len(set(titles)), f"duplicate {lang} titles"
+    needed = ["consent", "self_energy", "a_fit", "a_adjust", "a_check", "b_fit", "source"]
+    needed += [f"{p}_{d}" for p in ("self", "a", "b") for d in DIMS[1:]]
+    missing = [i for i in needed if i not in ids]
+    assert not missing, missing
+    for q in qs:
+        if q["id"].endswith("_energy"):
+            for c in q["ko_choices"] + q["en_choices"]:
+                assert parse_energy(c) is not None, c
+    print("✅ test_forms_script_matches_analysis passed")
+
+
+def test_google_forms_export():
+    qs = {q["id"]: q for q in load_questions()}
+    answers = {"consent": "동의합니다", "self_energy": "오전", "self_flex": "2", "self_people": "3",
+               "self_change": "4", "self_pace": "5", "a_energy": "하루 전체에 퍼져 있음",
+               "a_flex": "6", "a_people": "7", "a_change": "8", "a_pace": "9", "a_fit": "5",
+               "a_adjust": "3", "a_check": "4", "b_opt_in": "아니요, 건너뛸게요", "source": "GitHub"}
+    with tempfile.TemporaryDirectory() as d:
+        path = os.path.join(d, "export.csv")
+        header = ["타임스탬프"] + [qs[i]["ko"] for i in answers]
+        with open(path, "w", newline="", encoding="utf-8-sig") as f:
+            w = csv.writer(f)
+            w.writerow(header)
+            w.writerow(["2026/11/06 10:00:00"] + list(answers.values()))
+        rows = load_rows(path)
+    pairs, excluded, kept = build_pairs(rows)
+    assert kept == 1 and len(pairs) == 1, (kept, excluded)
+    assert rows[0]["source"] == "GitHub"
+    print("✅ test_google_forms_export passed")
+
+
 def run_tests():
     print("\nRUNNING UNIT TESTS\n")
+    test_forms_script_matches_analysis()
+    test_google_forms_export()
     test_parse_energy()
     test_exclusions()
     test_second_job_needs_all_answers()
@@ -420,7 +506,10 @@ def main():
             sys.exit(f"--demo takes one of: {', '.join(list(METRICS) + ['none'])}")
         run_demo(truth)
     elif args:
-        report(load_rows(args[0]))
+        rows = []
+        for path in args:
+            rows += load_rows(path)
+        report(rows)
     else:
         print(__doc__)
 
