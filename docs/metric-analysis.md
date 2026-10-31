@@ -177,7 +177,7 @@ A job 0.3 *more* intense than you and one 0.3 *less* intense score the same. The
 
 ## Housekeeping found along the way
 
-- **`src/prototype.py` still implements Cosine.** The removal (commit `18e75da`) covered diagrams and docs; the original engine is still in `src/`. Its own demo (Alice vs. startup / async) ranks the two roles the same way under both metrics, so it could never have shown the difference. Worth either deleting it or labelling it as the legacy Cosine baseline.
+- **`src/prototype.py`, the original Cosine engine, has since been removed.** Its own demo (Alice vs. startup / async) ranked the two roles the same way under both metrics, so it could never have shown the difference. Its cosine logic lives on as the `cosine` metric in `examples/metric_comparison.py`.
 - **Fixed in this change:** `examples/synthetic_data.py` chose the `routine_specialist` energy rhythm once at import time, so every routine specialist in a run shared one rhythm and seeded runs weren't reproducible. Rhythms are now sampled per profile.
 
 ---

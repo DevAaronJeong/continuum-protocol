@@ -108,7 +108,7 @@ This project is intentionally incomplete. We need your brain on:
 
 * **Think:** Read the [Manifesto](MANIFESTO.md).
 * **Discuss:** Comment on [Issues](https://github.com/DevAaronJeong/continuum-protocol/issues).
-* **Code:** Tweak the `prototype.py` parameters.
+* **Code:** Tweak the weights and dimensions in `src/alignment_engine.py`.
 
 ---
 
