@@ -181,15 +181,22 @@ continuum-protocol/
 ├── MANIFESTO.md                   # 핵심 철학
 ├── docs/
 │   ├── ethics-privacy.md          # 프라이버시 & 윤리 원칙
+│   ├── technical-philosophy.md    # 맨해튼 거리 vs 코사인 유사도 철학
 │   ├── why-not-job-board.md       # 기존 잡보드와의 차이점
 │   ├── open-questions.md          # 미해결 질문들 (도와주세요!)
 │   ├── metric-analysis.md         # 코사인 vs 맨해튼: 전환이 바꾼 것
-│   └── roadmap.md                 # 앞으로의 방향
+│   ├── fit-as-stability.md        # 동적 안정성으로서의 적합성 이론
+│   ├── roadmap.md                 # 앞으로의 방향
+│   └── assets/
+│       ├── Figure_1.png           # 안정적 적합성 궤적 시각화
+│       ├── Figure_2.png           # 불안정 적합성 궤적 시각화
+│       └── Figure_3.png           # 가설 검증 시각화
 ├── src/
 │   └── alignment_engine.py        # 핵심 정렬 로직 (개념적)
 ├── examples/
 │   ├── simple_match.py            # 기본 정렬 데모
 │   ├── batch_alignment_demo.py    # 다중 옵션 매칭
+│   ├── stability_simulation.py    # 동적 안정성 시뮬레이션 (Phase 0)
 │   ├── metric_comparison.py       # 코사인 vs 맨해튼 분석 (이슈 #4)
 │   └── synthetic_data.py          # 테스트 데이터 생성기
 ├── .github/
@@ -213,6 +220,9 @@ python src/alignment_engine.py
 
 # 배치 매칭 시도
 python examples/batch_alignment_demo.py
+
+# 🌊 동적 안정성 탐구 (번아웃 수학 이론 보기)
+python examples/stability_simulation.py
 
 # 📏 코사인 vs 맨해튼 비교 (이슈 #4)
 python examples/metric_comparison.py
