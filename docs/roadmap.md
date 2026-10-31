@@ -110,10 +110,11 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 **Hypothesis:** A time-based check separates steady effort from rising effort, which the Phase 0 version could not.
 
 #### Experiment 2.5: Retrospective Fit Survey
-- 20–30 people, about 10 minutes, anonymous (no names, employers, or contact details)
-- Each person describes their own rhythm and 1–2 past or current jobs on the same dimensions, then rates how well each job fit (1–7)
+- About 100 people through free channels, open November 6–30, 2026; about 10 minutes, anonymous (no names, employers, or contact details)
+- Each person describes their own rhythm, their current or most recent job, and optionally a contrasting job on the same dimensions, then rates how well each job fit (1–7)
 - Compare which metric's alignment score tracks the fit ratings best
 - Write down the hypothesis and decision rule before collecting any data
+- Plan, written before data collection: [experiments/retrospective-fit-survey.md](experiments/retrospective-fit-survey.md)
 
 **Hypothesis:** Manhattan-based alignment tracks reported fit better than cosine.
 

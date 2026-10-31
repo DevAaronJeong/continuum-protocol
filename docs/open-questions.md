@@ -79,7 +79,7 @@ People and organizations change over time.
 Shifts goal from "finding perfect match" to "finding stable system where friction dampens out."
 
 👉 **Detailed theory:** [fit-as-stability.md](fit-as-stability.md)
-👉 **Quick overview:** [Technical Philosophy - Dynamic Stability](../technical-philosophy.md#from-static-distance-to-dynamic-stability)
+👉 **Quick overview:** [Technical Philosophy - Dynamic Stability](technical-philosophy.md#from-static-distance-to-dynamic-stability)
 
 ---
 
