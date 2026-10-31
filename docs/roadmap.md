@@ -8,19 +8,37 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 ---
 
-## Current Status: **Conceptual**
+## Current Status: **Conceptual** (updated October 2026)
 
 ✅ What exists:
 - Core philosophy (Manifesto)
 - Ethics & privacy principles
 - Minimal matching algorithm prototype
 - Open questions document
+- Theory of fit as dynamic stability, with a Phase 0 simulation ([fit-as-stability.md](fit-as-stability.md))
+- Cosine vs. Manhattan comparison on synthetic data ([metric-analysis.md](metric-analysis.md), from [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4))
+- License: AGPL-3.0 for code, CC BY 4.0 for docs
 
 ❌ What doesn't exist yet:
 - Real user data collection
 - Production-ready implementation
 - Community consensus on hard questions
-- Legal/license clarity
+
+### Status update (October 2026)
+
+**Activity:** Most of the groundwork happened between December 30, 2025 and January 1, 2026. The project then paused for about ten months and resumed in October 2026.
+
+**What we learned since then:**
+- **The metric choice matters.** Cosine and Manhattan pick a different top match for about half of synthetic people. Whether Manhattan is the right choice still needs human data.
+- **Our Phase 0 stability check has a flaw.** The simulation measures $s_j$ in the order new levels first appear, not over time. In tests it labels steadily rising effort (burnout) as stable and noisy-but-flat effort as unstable. We'll discuss a time-based fix in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7) before changing it (Experiment 2.4).
+- **Engagement is below the Phase 1 target.** One external person has engaged critically so far. The target is 10.
+
+**Next, in order** (no dates; this list gets updated as items finish):
+1. ~~Decide a license~~ ✅
+2. Fix the stability check (Experiment 2.4)
+3. Retrospective fit survey (Experiment 2.5)
+4. Weekly adjustment diary pilot (Experiment 2.6)
+5. Publish the results, including negative ones
 
 ---
 
@@ -33,19 +51,23 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 - [x] Ethics & Privacy doc (done)
 - [x] Why Not a Job Board explainer (done)
 - [x] Simple matching example code (done)
-- [ ] License decision (in progress)
-- [ ] Community contribution guidelines (in progress)
+- [x] License decision (AGPL-3.0 for code, CC BY 4.0 for docs)
+- [x] Community contribution guidelines (basic version in CONTRIBUTING.md)
 
 ### Success criteria:
 - At least 10 people engage critically with the ideas
 - At least 3 people point out serious flaws
 - We can articulate what this project is NOT
 
+**Progress (October 2026):** One external contributor has engaged critically and reframed "fit" as dynamic stability. We're short of the 10-person target.
+
 **Timeline:** Ongoing
 
 ---
 
-## Phase 2: Experimentation (Next 3-6 months)
+## Phase 2: Experimentation (Next)
+
+**Status:** Started (October 2026)
 
 **Goal:** Test if the core concept has any validity.
 
@@ -70,6 +92,8 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 **Hypothesis:** Some lifestyle dimensions (e.g., energy rhythm) matter more than others (e.g., intensity preference).
 
+**Status:** Partly done. [metric-analysis.md](metric-analysis.md) compares five metrics on synthetic profiles.
+
 #### Experiment 2.3: Organization Profiling
 - Scrape public data (meeting times on calendars, GitHub commit times, etc.)
 - See if company "rhythms" can be inferred
@@ -77,14 +101,37 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 **Hypothesis:** Organizations have observable rhythms, just like people.
 
+#### Experiment 2.4: Fix the Stability Check
+- Define $K(i)$ as a weekly self-report: "How much did you have to adjust yourself to your work this week?" (0–10)
+- Judge stability by the trend of $K$ over time after a settling period, and flag when that trend speeds up
+- Turn the Phase 0 failure cases into unit tests
+- Discuss with the model's original author in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7) first
+
+**Hypothesis:** A time-based check separates steady effort from rising effort, which the Phase 0 version could not.
+
+#### Experiment 2.5: Retrospective Fit Survey
+- 20–30 people, about 10 minutes, anonymous (no names, employers, or contact details)
+- Each person describes their own rhythm and 1–2 past or current jobs on the same dimensions, then rates how well each job fit (1–7)
+- Compare which metric's alignment score tracks the fit ratings best
+- Write down the hypothesis and decision rule before collecting any data
+
+**Hypothesis:** Manhattan-based alignment tracks reported fit better than cosine.
+
+#### Experiment 2.6: Weekly Adjustment Diary (Pilot)
+- 5–10 volunteers, 6–8 weeks, one question per week (the $K(i)$ from 2.4)
+- Participants are identified only by a code word they choose
+- The first real test of fit as dynamic stability
+
+**Hypothesis:** People whose fit feels wrong show rising $K$; people whose fit feels right settle.
+
 ### Deliverables:
-- [ ] Synthetic data generator
-- [ ] Multiple matching algorithm implementations
-- [ ] Write-up of findings (even if experiments fail)
+- [x] Synthetic data generator
+- [x] Multiple matching algorithm implementations (cosine, Manhattan, Euclidean, Chebyshev)
+- [ ] Write-up of findings (even if experiments fail). First one: [metric-analysis.md](metric-analysis.md)
 
 ---
 
-## Phase 3: Reality Check (6-12 months out)
+## Phase 3: Reality Check (after Phase 2)
 
 **Goal:** Test with real humans in low-stakes scenarios.
 
@@ -117,7 +164,7 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 ---
 
-## Phase 4: Protocol Formalization (12+ months out)
+## Phase 4: Protocol Formalization (after Phase 3)
 
 **Only proceed if Phases 1-3 show promise.**
 
@@ -246,12 +293,12 @@ If the community decides:
 
 ## Timeline Summary
 
-| Phase | Timeline | Status |
-|-------|----------|--------|
-| 1. Foundation | Now | In progress |
-| 2. Experimentation | 3-6 months | Not started |
-| 3. Reality Check | 6-12 months | Conditional on Phase 2 |
-| 4. Protocol Formalization | 12+ months | Conditional on Phase 3 |
+| Phase | When | Status (October 2026) |
+|-------|------|--------|
+| 1. Foundation | Ongoing | Mostly done; engagement below target |
+| 2. Experimentation | Now | Started |
+| 3. Reality Check | After Phase 2 | Conditional on Phase 2 |
+| 4. Protocol Formalization | After Phase 3 | Conditional on Phase 3 |
 | 5. Scale | Speculative | May never happen |
 
 ---

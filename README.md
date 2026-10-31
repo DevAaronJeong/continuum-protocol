@@ -3,7 +3,8 @@
 
 [![Korean](https://img.shields.io/badge/Language-Korean-blue.svg)](README.kr.md)
 [![Status](https://img.shields.io/badge/Status-Experimental-orange.svg)]()
-[![License](https://img.shields.io/badge/License-Discussing-red.svg)](https://github.com/DevAaronJeong/continuum-protocol/issues)
+[![Code: AGPL-3.0](https://img.shields.io/badge/Code-AGPL--3.0-blue.svg)](LICENSE)
+[![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](LICENSE-docs)
 
 ## ⚡ TL;DR (What is this?)
 * **A Protocol:** Matches people/work using dynamic *lifestyle vectors* (energy, focus, variance).
@@ -115,7 +116,7 @@ This project is intentionally incomplete. We need your brain on:
 
 **If this system becomes a surveillance tool, it has failed.**
 
-We are currently debating which license best protects this mission (e.g., Hippocratic License).
+The code is licensed under **AGPL-3.0**: anyone who runs a modified version as a service must publish its source. See [License](#-license).
 
 📄 See our [Ethics & Privacy Guidelines](docs/ethics-privacy.md).
 
@@ -334,6 +335,23 @@ A: Readability over performance. This is research, not production. See [Why Pyth
 
 ---
 
+## 📜 License
+
+| What | License |
+|------|---------|
+| Code (`src/`, `examples/`) | [GNU AGPL-3.0-or-later](LICENSE) |
+| Documentation and figures (`*.md`, `docs/`) | [CC BY 4.0](LICENSE-docs) |
+
+**Why the split?**
+- **Docs are open to share.** No license can lock up an idea, so the writing is free to share, translate, and cite with attribution.
+- **Code stays inspectable.** If you modify the code and run it as a matching service, AGPL requires you to publish your source. A matching system that hides its reasoning goes against everything here.
+
+**Name use:** Forks are welcome. If your fork drops the principles in the [Manifesto](MANIFESTO.md) or the [Ethics & Privacy Guidelines](docs/ethics-privacy.md), please don't call it "Continuum Protocol."
+
+A license alone can't prevent misuse. See [License Considerations](docs/ethics-privacy.md#license-considerations) for what it does and doesn't cover.
+
+---
+
 ## 🙏 Acknowledgments
 
 This project stands on the shoulders of:
@@ -349,4 +367,4 @@ This project stands on the shoulders of:
 
 ---
 
-*Last updated: 2025*
+*Last updated: October 2026*

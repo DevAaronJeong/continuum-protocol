@@ -162,7 +162,7 @@ We don't know yet. We're exploring methods like:
 Possible approaches:
 - Require two-way transparency (companies must also share their rhythm data)
 - Community-driven reputation systems for organizations
-- License restrictions on commercial use (e.g., Hippocratic License)
+- Copyleft licensing (AGPL-3.0) so modified versions run as services stay inspectable
 
 **Q: Is it ethical to model humans mathematically?**  
 This is the deepest question. Our stance:
@@ -186,14 +186,18 @@ We will treat ethics concerns with the highest priority.
 
 ## License Considerations
 
-We are currently evaluating licenses that enforce ethical use, such as:
-- **Hippocratic License** — Prohibits use for surveillance, labor exploitation, etc.
-- **Cooperative License** — Requires commercial users to contribute back
-- **Ethical Source** — Restricts use to align with human rights principles
+**Decision (October 2026):**
+- **Code:** GNU AGPL-3.0-or-later ([LICENSE](../LICENSE))
+- **Documentation and figures:** CC BY 4.0 ([LICENSE-docs](../LICENSE-docs))
 
-Standard MIT/Apache may not be sufficient if we want to prevent this from becoming a corporate surveillance tool.
+**Why not an ethical-source license such as the Hippocratic License?**
+- **Licenses protect text and code, not ideas.** Anyone can re-implement rhythm-based matching from scratch, so no license can stop a surveillance product built on these ideas.
+- **Ethical-source licenses aren't open source under the OSI definition.** Many organizations can't use them or contribute to them, and how well they can be enforced is untested.
+- **AGPL covers what a license can realistically cover.** A modified version run as a service must publish its source, so forks stay inspectable and their matching stays explainable.
 
-**This decision is still open for discussion.**
+What a license can't do is the job of the rest of this document: design choices (local-first, no rankings, explainability), the roadmap's [What We Will NOT Do](roadmap.md#what-we-will-not-do), and the community.
+
+If you think this is the wrong call, [open an issue](https://github.com/DevAaronJeong/continuum-protocol/issues/new). It can be revisited.
 
 ---
 
