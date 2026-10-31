@@ -118,6 +118,8 @@ Manhattan calculates:
 
 Manhattan's ranking (B > A > C) matches intuition better than Cosine's (B ≈ A > C).
 
+> **Update (Issue #4 follow-up):** A [synthetic-data analysis](metric-analysis.md) found that this example mostly shows a scale artifact: 0.3 is below the 0–1 midpoint, so Job A actually leans *evening*, and Cosine measured from the midpoint already separates A from B. The stronger argument is that even midpoint-centered Cosine stays at a perfect score while a job's intensity drops far below yours. It sees direction, never speed. The analysis also lists where Manhattan itself is weak.
+
 ---
 
 ## Why Not Cosine? (The Industry Standard Critique)
