@@ -217,6 +217,8 @@ Scenarios we're worried about:
 - Strong restrictions → less adoption
 - Permissive license → easier to misuse
 
+**Current answer (October 2026):** Copyleft. Code is AGPL-3.0-or-later and docs are CC BY 4.0. No license can stop someone from re-implementing the idea, so the rest of the protection has to come from design and community. Reasoning: [License Considerations](ethics-privacy.md#license-considerations). The name question is still open.
+
 ---
 
 ## 3. Organizational Evaluation

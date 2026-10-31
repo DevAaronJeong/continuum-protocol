@@ -12,3 +12,7 @@ If you think something here is wrong, say so.
 **Rules:**
 - Respect people.
 - Question systems.
+
+**License:**
+By contributing, you agree that your code is licensed under AGPL-3.0-or-later
+and your documentation under CC BY 4.0, the same as the rest of the project.

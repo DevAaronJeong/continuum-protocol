@@ -4,7 +4,8 @@
 
 [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md)
 [![Status](https://img.shields.io/badge/Status-Experimental-orange.svg)]()
-[![License](https://img.shields.io/badge/License-Discussing-red.svg)](https://github.com/DevAaronJeong/continuum-protocol/issues)
+[![Code: AGPL-3.0](https://img.shields.io/badge/Code-AGPL--3.0-blue.svg)](LICENSE)
+[![Docs: CC BY 4.0](https://img.shields.io/badge/Docs-CC%20BY%204.0-lightgrey.svg)](LICENSE-docs)
 
 `continuum-protocol`은 사람과 일이 서로를 소모시키지 않고, 각자의 생활양식(Lifestyle)과 리듬에 맞춰 자연스럽게 정렬(Align)되는 방법을 탐구하는 오픈소스 실험입니다.
 
@@ -235,6 +236,7 @@ python examples/synthetic_data.py
 - 분석은 가능한 로컬에서 이루어집니다
 - 매칭 이유는 항상 설명 가능해야 합니다
 - 언제든 옵트아웃 가능해야 합니다
+- 코드는 **AGPL-3.0** 라이선스입니다. 수정해서 서비스로 운영하면 소스를 공개해야 합니다 ([라이선스](#-라이선스))
 
 📄 자세한 내용: [docs/ethics-privacy.md](docs/ethics-privacy.md)
 
@@ -310,6 +312,23 @@ A: 성능보다 가독성. 이것은 연구이지 프로덕션이 아닙니다. 
 
 ---
 
+## 📜 라이선스
+
+| 대상 | 라이선스 |
+|------|---------|
+| 코드 (`src/`, `examples/`) | [GNU AGPL-3.0-or-later](LICENSE) |
+| 문서와 그림 (`*.md`, `docs/`) | [CC BY 4.0](LICENSE-docs) |
+
+**왜 나눴나요?**
+- **문서는 자유롭게 퍼지도록.** 아이디어는 어떤 라이선스로도 묶을 수 없습니다. 그래서 글은 출처만 밝히면 공유, 번역, 인용할 수 있습니다.
+- **코드는 들여다볼 수 있도록.** 코드를 수정해 매칭 서비스로 운영하면 AGPL에 따라 소스를 공개해야 합니다. 이유를 숨기는 매칭 시스템은 이 프로젝트가 추구하는 모든 것에 반합니다.
+
+**이름 사용:** 포크는 환영합니다. 다만 [선언문](MANIFESTO.md)이나 [윤리 & 프라이버시 가이드라인](docs/ethics-privacy.md)의 원칙을 뺀 포크라면 "Continuum Protocol"이라는 이름은 쓰지 말아 주세요.
+
+라이선스만으로는 오용을 막을 수 없습니다. 무엇을 막고 무엇을 못 막는지는 [License Considerations](docs/ethics-privacy.md#license-considerations)(영문)를 참고하세요.
+
+---
+
 ## 🙏 감사의 말
 
 이 프로젝트는 다음의 토대 위에 서 있습니다:
@@ -325,4 +344,4 @@ A: 성능보다 가독성. 이것은 연구이지 프로덕션이 아닙니다. 
 
 ---
 
-*최종 업데이트: 2025*
+*최종 업데이트: 2026년 10월*
