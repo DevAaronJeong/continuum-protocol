@@ -138,6 +138,7 @@ The choice of distance metric is not just mathematical—it's **philosophical**.
 **Experiment ideas:**
 
 1. **A/B test different metrics** with synthetic data, ask users which rankings "feel right"
+   - First pass done: [metric-analysis.md](metric-analysis.md) shows *where* Cosine and Manhattan disagree (same direction, different intensity). Human judgments on those pairs are the missing half.
 2. **Interview people** about past job matches: "What made it work/not work?"
 3. **Collect mismatch stories:** When did a small difference matter a lot? When did a large difference not matter?
 

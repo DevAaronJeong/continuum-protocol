@@ -79,6 +79,8 @@ The key insight: Alignment is calculated at a specific moment $t$, acknowledging
 
 🧠 **Deep Dive:** Why do we use Manhattan Distance? Read our [Technical Philosophy](docs/technical-philosophy.md) on why we match "Speed", not "Words".
 
+📏 **What did removing Cosine actually change?** See the [Metric Analysis](docs/metric-analysis.md) (synthetic-data comparison, with Manhattan's own weak spots).
+
 ---
 
 ## 🧘 Manifesto & Philosophy
@@ -131,17 +133,20 @@ continuum-protocol/
 │   ├── why-not-job-board.md       # How this differs from job boards
 │   ├── open-questions.md          # Unresolved questions (help us!)
 │   ├── fit-as-stability.md        # Theory of fit as dynamic stability
+│   ├── metric-analysis.md         # Cosine vs Manhattan: what the switch changed
 │   ├── roadmap.md                 # Future direction
 │   └── assets/
 │       ├── Figure_1.png           # Stable fit trajectory visualization
 │       ├── Figure_2.png           # Unstable fit trajectory visualization
-│       └── Figure_3.png           # Hypothesis check visualization
+│       ├── Figure_3.png           # Hypothesis check visualization
+│       └── metric_comparison.png  # Cosine vs Manhattan comparison
 ├── src/
 │   └── alignment_engine.py        # Core alignment logic (conceptual)
 ├── examples/
 │   ├── simple_match.py            # Basic alignment demo
 │   ├── batch_alignment_demo.py    # Multiple options matching
 │   ├── stability_simulation.py    # Dynamic stability simulation (Phase 0)
+│   ├── metric_comparison.py       # Cosine vs Manhattan analysis (Issue #4)
 │   └── synthetic_data.py          # Test data generator
 ├── .github/
 │   └── ISSUE_TEMPLATE/            # Issue templates
@@ -166,6 +171,9 @@ python examples/batch_alignment_demo.py
 
 # 🌊 Explore Dynamic Stability (See Burnout Math)
 python examples/stability_simulation.py
+
+# 📏 Compare Cosine vs Manhattan (Issue #4)
+python examples/metric_comparison.py
 
 # Generate synthetic test data
 python examples/synthetic_data.py
@@ -213,6 +221,11 @@ Example of how one person's profile could be matched against multiple work oppor
 Generate fake lifestyle profiles for testing.
 - Run: `python examples/synthetic_data.py`
 - Purpose: Create test data without needing real user information
+
+**`examples/metric_comparison.py`**  
+Compares the removed Cosine engine with the current Manhattan engine on the same synthetic profiles.
+- Run: `python examples/metric_comparison.py` (needs numpy; add `--plot` for the figure, needs matplotlib)
+- Purpose: Show where the metrics disagree and on which kinds of matches (results: [docs/metric-analysis.md](docs/metric-analysis.md))
 
 ### What These Experiments Are NOT
 
