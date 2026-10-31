@@ -62,7 +62,10 @@ class SyntheticDataGenerator:
             "consistency_score": (0.5, 0.8)
         },
         "routine_specialist": {
-            "energy_rhythm": random.choice(["morning", "afternoon"]),
+            # A list means "pick one per generated profile" (see _pick_rhythm).
+            # Previously this was random.choice(...) evaluated once at import
+            # time, so every routine_specialist in a run shared one rhythm.
+            "energy_rhythm": ["morning", "afternoon"],
             "time_flexibility": (0.1, 0.3),
             "interaction_density": (0.2, 0.5),
             "change_tolerance": (0.1, 0.2),
@@ -124,6 +127,13 @@ class SyntheticDataGenerator:
     }
     
     @staticmethod
+    def _pick_rhythm(rhythm):
+        """Return a rhythm; a list of options is sampled per profile."""
+        if isinstance(rhythm, (list, tuple)):
+            return random.choice(list(rhythm))
+        return rhythm
+    
+    @staticmethod
     def _sample_from_range(value_range):
         """Sample a random float from a range tuple."""
         if isinstance(value_range, tuple):
@@ -144,8 +154,7 @@ class SyntheticDataGenerator:
         template = cls.PERSON_ARCHETYPES[archetype]
         
         return LifestyleVector(
-            energy_rhythm=template["energy_rhythm"] if isinstance(template["energy_rhythm"], str) 
-                         else random.choice(cls.ENERGY_RHYTHMS),
+            energy_rhythm=cls._pick_rhythm(template["energy_rhythm"]),
             time_flexibility=cls._sample_from_range(template["time_flexibility"]),
             interaction_density=cls._sample_from_range(template["interaction_density"]),
             change_tolerance=cls._sample_from_range(template["change_tolerance"]),
@@ -169,8 +178,7 @@ class SyntheticDataGenerator:
         template = cls.WORK_ARCHETYPES[archetype]
         
         return LifestyleVector(
-            energy_rhythm=template["energy_rhythm"] if isinstance(template["energy_rhythm"], str) 
-                         else random.choice(cls.ENERGY_RHYTHMS),
+            energy_rhythm=cls._pick_rhythm(template["energy_rhythm"]),
             time_flexibility=cls._sample_from_range(template["time_flexibility"]),
             interaction_density=cls._sample_from_range(template["interaction_density"]),
             change_tolerance=cls._sample_from_range(template["change_tolerance"]),
