@@ -1,0 +1,12 @@
+{
+  "note": "Google Forms that receive the answers. Created by examples/survey_forms.gs. When the forms are re-created, update the IDs here (see site/README.md) and rebuild survey-data.js.",
+  "ko": {
+    "form_id": "1FAIpQLSeCWNYin0YTdyOm2ssG3_s-k0NHI0AgU8SKS-jPVX4BPdpa4Q",
+    "entries": {"consent":1406694386,"self_energy":1899665881,"self_flex":812137633,"self_people":1601049592,"self_change":1025307317,"self_pace":1627625209,"a_energy":1706468584,"a_flex":1156947740,"a_people":1852939060,"a_change":2043457127,"a_pace":691418828,"a_fit":1203411443,"a_adjust":1557423885,"a_check":1742957667,"a_current":2040745124,"a_duration":971290571,"a_note":1707952607,"b_opt_in":78274537,"b_energy":696708236,"b_flex":534217073,"b_people":391343088,"b_change":1553158111,"b_pace":1152295112,"b_fit":1510959249,"b_adjust":1016628836,"b_current":1545072856,"b_duration":1825155704,"b_note":1480309915,"work_type":1530894993,"region":1153622375,"source":489152833,"code_word":486987551}
+  },
+  "en": {
+    "form_id": "1FAIpQLSf_TjspRuk6c3TABZbsfUS-NkvdUn7z1nHwvexMINHJfZjqAA",
+    "entries": {"consent":646449061,"self_energy":275377616,"self_flex":442829932,"self_people":1721002534,"self_change":1662789795,"self_pace":573565354,"a_energy":590083431,"a_flex":468989707,"a_people":1635914946,"a_change":345979358,"a_pace":1885743008,"a_fit":2058627544,"a_adjust":43510785,"a_check":152949202,"a_current":1482939889,"a_duration":1497649821,"a_note":1866878536,"b_opt_in":1707735343,"b_energy":367998733,"b_flex":1633234816,"b_people":570140018,"b_change":1922448593,"b_pace":474604195,"b_fit":1778947616,"b_adjust":1989024015,"b_current":268759533,"b_duration":695887338,"b_note":683098809,"work_type":1671270335,"region":2100713060,"source":1032878343,"code_word":1402801345}
+  },
+  "deletion_form_id": "1FAIpQLSc7GxlO3tJ9_QMdVu-17Y44gDZxkQPaKwBN9SAxVElK7Mq-QA"
+}
