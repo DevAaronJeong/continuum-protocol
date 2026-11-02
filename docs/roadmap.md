@@ -110,7 +110,7 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 **Hypothesis:** A time-based check separates steady effort from rising effort, which the Phase 0 version could not.
 
 #### Experiment 2.5: Retrospective Fit Survey
-- About 100 people through free channels, open November 6–30, 2026; about 10 minutes, anonymous (no names, employers, or contact details)
+- About 100 people through free channels; opens November 11, 2026 and stays open until 100 responses or March 31, 2027; about 10 minutes, anonymous (no names, employers, or contact details)
 - Each person describes their own rhythm, their current or most recent job, and optionally a contrasting job on the same dimensions, then rates how well each job fit (1–7)
 - Compare which metric's alignment score tracks the fit ratings best
 - Write down the hypothesis and decision rule before collecting any data

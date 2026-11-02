@@ -18,14 +18,16 @@ Because this is an assumption check, the rules for reading the result are fixed 
 
 ## Schedule
 
-| Date (2026) | Step |
+There's no budget for paid respondents, so the survey stays open for months and responses build up through free channels.
+
+| Date | Step |
 |---|---|
-| Nov 2 | Create the forms by running `examples/survey_forms.gs` in Google Apps Script |
-| Nov 2–4 | Pre-check with about 5 people: are the questions clear, and does it take about 10 minutes? Their answers are not analyzed. |
-| Nov 5 | Last changes to the questions. After this, nothing in this plan, the forms, or the analysis script changes. |
-| **Nov 6** | **Survey opens** |
-| Nov 20 | Mid-point check on the **number** of responses only (see Stopping) |
-| **Nov 30** | **Survey closes** at the latest |
+| Nov 2, 2026 | Forms created by running `examples/survey_forms.gs` in Google Apps Script (done) |
+| Nov 2–9 | Pre-check: watch 2–3 people answer while they think aloud, plus a few more online. Are the questions clear, and does it take about 10 minutes? Their answers are not analyzed. |
+| Nov 10 | Last changes to the questions. The forms are created again from scratch so pre-check answers can't mix in. After this, nothing in this plan, the forms, or the analysis script changes. |
+| **Nov 11** | **Survey opens** |
+| First Monday of each month | Check the **number** of responses only (see Stopping) |
+| **Mar 31, 2027** | **Survey closes** at the latest, or earlier once there are 100 complete responses |
 | After closing | Analysis runs once; results are published, whatever they show |
 
 ---
@@ -34,7 +36,7 @@ Because this is an assumption check, the rules for reading the result are fixed 
 
 - **Who:** adults who have worked at least one job (part-time and freelance count) for 3 months or more.
 - **How they're reached (all free):** shared by friends and their friends, GitHub Discussions, Korean online communities (where their rules allow surveys), [SurveyCircle](https://www.surveycircle.com), and Reddit r/SampleSize. Korean and English versions.
-- **Target:** 100 complete responses.
+- **Target:** 100 complete responses, built up over the months the survey is open. Each project update posted on GitHub, X, or LinkedIn carries the survey link.
 
 **Who this really describes.** People who choose to answer a survey about whether their work fits them are likely to have strong feelings about it, often because it doesn't. Paid survey panels have their own lean as well. So the result describes **people who sought out a survey like this**, not workers in general. That is close to the people this protocol is meant for: people looking for work that fits better. Results will be written up with that scope.
 
@@ -67,7 +69,7 @@ For every pair, compute alignment with **weighted Manhattan** (the current engin
 | `d < 0` and its interval excludes 0 | Inconsistent with it: cosine tracks fit better. We revisit the metric choice. |
 | The interval for `d` includes 0 | Can't tell the two apart with this sample. |
 
-**On sample size:** Manhattan and cosine scores are strongly related, so separating them takes data. In made-up data where fit really follows Manhattan and each person describes one job, 100 people found the basic relationship 93–100% of the time but separated Manhattan from cosine only 27–50% of the time, depending on how noisy the answers are (200 people: 40–80%). Second jobs add pairs and help. "Can't tell" is a real possibility, and it would still be published.
+**On sample size:** Manhattan and cosine scores are strongly related, so separating them takes data. In made-up data where fit really follows Manhattan and each person describes one job, 100 people found the basic relationship 93–100% of the time but separated Manhattan from cosine only 27–50% of the time, depending on how noisy the answers are (200 people: 40–80%). Second jobs add pairs and help. "Can't tell" is a real possibility, and it would still be published. With free channels only, the survey may also close with fewer than 100 people; see Stopping for how that's handled.
 
 ---
 
@@ -103,9 +105,10 @@ A second job is used only if all of its required answers are present. Pre-check 
 
 ## Stopping
 
-- The survey closes at **100 complete responses or on November 30, 2026, whichever comes first.**
-- Until it closes, only the **number** of responses is checked, never the answers.
-- **Mid-point, November 20:** if there are fewer than 30 responses, the maintainer decides whether to add a paid panel (Opensurvey, about ₩165,000 including VAT for 100 people, using a shorter version with Parts 1–2 only). Whatever is decided is recorded in this file before closing, and any panel responses are reported as their own channel.
+- The survey closes at **100 complete responses or on March 31, 2027, whichever comes first.**
+- Until it closes, only the **number** of responses is checked, on the first Monday of each month, never the answers.
+- **If it closes with fewer than 30 complete responses,** the checks are still run and published, but the primary check is labelled "too few responses to read" instead of being read with the table above.
+- **Paid panel:** there's no budget for one now. If money becomes available before closing, a paid batch may be added (for reference, Opensurvey quoted about ₩165,000 including VAT for 100 people, using a shorter version with Parts 1–2 only). The decision and its size are recorded in this file before closing, and those responses are reported as their own channel.
 - The analysis runs once, after closing, using the script as committed before opening.
 
 ---

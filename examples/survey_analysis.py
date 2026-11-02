@@ -36,6 +36,7 @@ sys.path.insert(0, os.path.join(ROOT, 'examples'))
 from metric_comparison import ENERGY_CODE, METRICS, WEIGHTS, spearman  # noqa: E402
 
 FORMS_SCRIPT = os.path.join(ROOT, 'examples', 'survey_forms.gs')
+MIN_PEOPLE_TO_READ = 30  # fixed in the plan: fewer people -> "too few responses to read"
 SEED = 2026
 N_BOOT = 5000
 DIMS = ["energy", "flex", "people", "change", "pace"]
@@ -212,8 +213,12 @@ def primary_check(pairs, n_boot: int = N_BOOT) -> Dict:
             "ci_manhattan": interval(boot_m), "ci_d": interval(boot_d)}
 
 
-def reading(res: Dict) -> List[str]:
+def reading(res: Dict, people: int = MIN_PEOPLE_TO_READ) -> List[str]:
     """The reading rules from the plan, applied mechanically."""
+    if people < MIN_PEOPLE_TO_READ:
+        return [f"Too few responses to read: {people} people, fewer than "
+                f"{MIN_PEOPLE_TO_READ} (rule fixed in the plan). Numbers are shown, "
+                "but no reading is made."]
     lines = []
     lo_m, hi_m = res["ci_manhattan"]
     if lo_m <= 0 <= hi_m:
@@ -307,7 +312,7 @@ def report(rows, n_boot: int = N_BOOT) -> Dict:
     print(f"  Difference d:        {res['d']:+.2f}   "
           f"95% interval {res['ci_d'][0]:+.2f} to {res['ci_d'][1]:+.2f}")
     print("\nREADING (rules fixed before data collection)")
-    for line in reading(res):
+    for line in reading(res, kept):
         print(f"  - {line}")
 
     print("\nSECONDARY  (reported, not used for the reading)")
@@ -479,8 +484,16 @@ def test_google_forms_export():
     print("✅ test_google_forms_export passed")
 
 
+def test_too_few_to_read():
+    res = {"ci_manhattan": (0.2, 0.6), "ci_d": (0.1, 0.3)}
+    assert reading(res, 29)[0].startswith("Too few responses to read")
+    assert reading(res, 30)[0].startswith("Basic check holds")
+    print("✅ test_too_few_to_read passed")
+
+
 def run_tests():
     print("\nRUNNING UNIT TESTS\n")
+    test_too_few_to_read()
     test_forms_script_matches_analysis()
     test_google_forms_export()
     test_parse_energy()
