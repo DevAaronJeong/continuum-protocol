@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지금 하는 일, 내 리듬과 맞나요?</title>
+<meta name="description" content="나와 지금 하는 일을 다섯 가지 리듬으로 나란히 놓아 보는 10분 익명 설문. 다 하고 나면 어디가 가깝고 어디가 먼지 보여 드려요.">
+<meta property="og:title" content="지금 하는 일, 내 리듬과 맞나요?">
+<meta property="og:description" content="나와 일을 다섯 가지 리듬으로 나란히 놓아 보는 10분 익명 설문이에요.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f1f3f0;
+  --surface: #fbfcfa;
+  --ink: #1d2a30;
+  --muted: #56656a;
+  --line: #c6cfcc;
+  --me: #2e4c8c;
+  --me-soft: #dfe5f2;
+  --job: #b7790c;
+  --job-fill: #c98a12;
+  --job-soft: #f5e8cf;
+  --warn: #9b3d2e;
+  --on-me: #ffffff;
+  --on-job: #1d2a30;
+  --accent: var(--me);
+  --accent-fill: var(--me);
+  --accent-soft: var(--me-soft);
+  --on-accent: var(--on-me);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #131a1d;
+    --surface: #1a2327;
+    --ink: #e6ebe9;
+    --muted: #9eabaf;
+    --line: #34434a;
+    --me: #93aaea;
+    --me-soft: #26324d;
+    --job: #e2b04c;
+    --job-fill: #e2b04c;
+    --job-soft: #3a3220;
+    --warn: #ee9a8a;
+    --on-me: #131a1d;
+    --on-job: #131a1d;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+.topbar {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 1rem 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .875rem;
+}
+.topbar a { color: var(--muted); text-decoration: none; }
+.topbar a:hover { text-decoration: underline; }
+.link-button {
+  background: none; border: 0; padding: .25rem 0; font: inherit; color: var(--muted);
+  text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+main { max-width: 36rem; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
+h1 {
+  font-size: clamp(1.7rem, 6.4vw, 2.2rem);
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  margin: .5rem 0 1rem;
+}
+h2 { font-size: 1.25rem; line-height: 1.35; font-weight: 600; margin: 0 0 .35rem; }
+p { margin: 0 0 1rem; }
+.lead { font-size: 1.0625rem; color: var(--ink); }
+.muted { color: var(--muted); }
+.small { font-size: .875rem; }
+ul.facts { padding-left: 1.1rem; margin: 0 0 1.5rem; }
+ul.facts li { margin-bottom: .35rem; }
+
+/* the two walkers */
+.walkers { width: 100%; height: 76px; display: block; margin: .5rem 0 1.25rem; overflow: visible; }
+.walkers .track { stroke: var(--line); stroke-width: 2; stroke-linecap: round; }
+.walkers .me { fill: var(--me); }
+.walkers .job { fill: var(--surface); stroke: var(--job); stroke-width: 3.5; }
+.walkers text { font-size: 13px; fill: var(--muted); font-family: inherit; }
+.walkers .g-me { animation: walk-me 1.6s cubic-bezier(.3,.7,.2,1) .2s both; }
+.walkers .g-job { animation: walk-job 1.6s cubic-bezier(.3,.7,.2,1) .2s both; }
+@keyframes walk-me { from { transform: translateX(0); } to { transform: translateX(78px); } }
+@keyframes walk-job { from { transform: translateX(0); } to { transform: translateX(212px); } }
+@media (prefers-reduced-motion: reduce) {
+  .walkers .g-me, .walkers .g-job { animation-duration: 1ms; animation-delay: 0s; }
+}
+
+/* progress */
+.progress { display: flex; gap: .35rem; margin: 0 0 .75rem; }
+.progress span { flex: 1; height: 4px; border-radius: 2px; background: var(--line); }
+.progress span.done { background: var(--accent); }
+.progress span.skip { background: transparent; border-top: 2px dotted var(--line); height: 0; margin-top: 1px; }
+.page-help { color: var(--muted); margin-bottom: 2rem; }
+
+/* questions */
+fieldset { border: 0; padding: 0; margin: 0 0 2.25rem; min-width: 0; }
+legend { font-weight: 600; font-size: 1.0625rem; line-height: 1.5; padding: 0; margin-bottom: .75rem; }
+.optional { font-weight: 400; color: var(--muted); }
+.options { display: grid; gap: .5rem; }
+.option {
+  display: flex; align-items: center; gap: .65rem;
+  padding: .7rem .9rem; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface); cursor: pointer;
+}
+.option input { accent-color: var(--accent); width: 1.1rem; height: 1.1rem; margin: 0; flex: none; }
+.option:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.scale { display: grid; gap: 4px; }
+.scale.n11 { grid-template-columns: repeat(11, 1fr); }
+.scale.n7 { grid-template-columns: repeat(7, 1fr); }
+.tick { position: relative; }
+.tick input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.tick span {
+  display: flex; align-items: center; justify-content: center;
+  height: 2.75rem; border: 1px solid var(--line); border-radius: 7px;
+  background: var(--surface); font-variant-numeric: tabular-nums; font-size: .9375rem;
+}
+.tick input:checked + span { background: var(--accent-fill); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+.tick input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.ends { display: flex; justify-content: space-between; gap: 1rem; margin-top: .4rem; font-size: .8125rem; color: var(--muted); }
+.ends span:last-child { text-align: right; }
+textarea, input[type="text"] {
+  width: 100%; font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: .7rem .8rem;
+}
+textarea { min-height: 5.5rem; resize: vertical; }
+.error { color: var(--warn); font-size: .875rem; margin: .5rem 0 0; }
+fieldset.missing legend { color: var(--warn); }
+.consent { margin: 0 0 1.5rem; }
+
+/* buttons */
+.actions { display: flex; gap: .75rem; margin-top: 2.5rem; }
+.primary, .secondary {
+  font: inherit; font-weight: 600; border-radius: 999px; padding: .85rem 1.4rem; cursor: pointer;
+}
+.primary { flex: 1; background: var(--accent-fill); color: var(--on-accent); border: 1px solid var(--accent); }
+.primary[disabled] { opacity: .55; cursor: progress; }
+.secondary { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+body.is-job { --accent: var(--job); --accent-fill: var(--job-fill); --accent-soft: var(--job-soft); --on-accent: var(--on-job); }
+
+/* result */
+.legend-row { display: flex; gap: 1.25rem; font-size: .875rem; color: var(--muted); margin: 0 0 1.25rem; }
+.dot { display: inline-block; width: .8rem; height: .8rem; border-radius: 50%; vertical-align: -.05rem; margin-right: .35rem; }
+.dot.me { background: var(--me); }
+.dot.job { background: var(--surface); border: 3px solid var(--job); }
+.summary { background: var(--surface); border-left: 4px solid var(--job); padding: 1rem 1.1rem; margin: 0 0 2rem; border-radius: 0 10px 10px 0; }
+.summary p:last-child { margin-bottom: 0; }
+.dim { margin: 0 0 1.75rem; }
+.dim-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.dim-name { font-weight: 600; }
+.dim-values { font-size: .875rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dim svg { width: 100%; height: 34px; display: block; overflow: visible; }
+.dim .track { stroke: var(--line); stroke-width: 2; stroke-linecap: round; }
+.dim .gap { stroke: var(--ink); stroke-opacity: .28; stroke-width: 5; stroke-linecap: round; }
+.dim.farthest .gap { stroke: var(--job); stroke-opacity: .55; }
+.dim .me { fill: var(--me); }
+.dim .job { fill: var(--surface); stroke: var(--job); stroke-width: 3.5; }
+.tabs { display: flex; gap: .5rem; margin: 0 0 1.25rem; }
+.tabs button {
+  font: inherit; font-size: .9375rem; padding: .45rem .9rem; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--ink); border: 1px solid var(--line);
+}
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+a { color: var(--me); text-underline-offset: 3px; }
+.note { font-size: .9375rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1.25rem; margin-top: 2rem; }
+.share { margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="https://github.com/DevAaronJeong/continuum-protocol">continuum-protocol</a>
+  <button class="link-button" id="lang-toggle" type="button">English</button>
+</div>
+<main id="app" aria-live="polite"></main>
+<noscript><main><p>이 설문은 자바스크립트가 필요해요. / This survey needs JavaScript.</p></main></noscript>
+<script src="survey-data.js"></script>
+<script>
+(function () {
+  "use strict";
+  var S = window.SURVEY;
+
+  var UI = {
+    ko: {
+      htmlLang: "ko",
+      other: "English",
+      title: "지금 하는 일, 내 리듬과 맞나요?",
+      lead: "나와 지금 하는 일을 다섯 가지 리듬으로 나란히 놓아 보는 10분 설문이에요. 다 하고 나면 어디가 가깝고 어디가 먼지 보여 드려요.",
+      me: "나", job: "일",
+      facts: [
+        "익명입니다. 이름, 이메일, 회사명, 직함은 묻지 않습니다.",
+        "약 10분 걸립니다. 언제든 그만둘 수 있고, 제출하기 전에는 아무것도 저장되지 않습니다.",
+        "요약 결과만 공개합니다. 개별 응답은 공개하지 않습니다.",
+        "나중에 응답을 지우고 싶을 수도 있다면, 마지막에 나만 아는 암호 단어를 정해 두세요.",
+        "참여 대상: 만 18세 이상이고, 한 가지 이상의 일(아르바이트·프리랜서 포함)을 3개월 이상 해 본 분."
+      ],
+      about: "이 설문은 오픈소스 프로젝트 continuum-protocol의 일부입니다. 이 프로젝트는 일이 사람의 능력뿐 아니라 생활의 리듬과도 맞는지를 탐구합니다.",
+      start: "설문 시작하기",
+      next: "다음", back: "이전",
+      submit: "제출하고 결과 보기", sending: "보내는 중",
+      required: "이 질문에 답해 주세요.",
+      needConsent: "참여에 동의해야 시작할 수 있어요.",
+      sendFailed: "응답을 보내지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요.",
+      optional: "(선택)",
+      resultTitle: "나와 이 일의 리듬",
+      resultLead: "점수나 정답이 아니라, 어디가 가깝고 어디가 먼지를 보여 주는 설명이에요.",
+      legendMe: "나", legendJob: "이 일",
+      firstJob: "첫 번째 일", secondJob: "두 번째 일",
+      dims: {
+        energy: "에너지가 몰리는 때",
+        flex: "일정의 유연함",
+        people: "다른 사람과 함께 일하는 정도",
+        change: "변화의 정도",
+        pace: "일의 속도"
+      },
+      ends: {
+        flex: ["정해진 시간", "내가 정하는 시간"],
+        people: ["주로 혼자", "늘 함께"],
+        change: ["안정적인 루틴", "잦은 변화"],
+        pace: ["꾸준하고 고르게", "몰아치고 쉬기"]
+      },
+      energyNames: ["오전", "오후", "저녁·밤", "그때그때 다름"],
+      values: function (me, job) { return "나 " + me + ", 일 " + job; },
+      farthest: function (name, me, job, toward) {
+        return "가장 크게 벌어진 곳은 " + ko("'" + name + "'", "이에요", "예요") + ". 나는 " + me + ", 이 일은 " + ko(job, "이라서", "라서") + ", 일이 나보다 '" + toward + "' 쪽에 더 가까워요.";
+      },
+      allClose: "네 가지 모두 두 칸 이내로 가까워요. 리듬 차이가 크지 않은 일이에요.",
+      closest: function (name, me, job) { return "가장 가까운 곳은 " + ko("'" + name + "'", "이에요", "예요") + " (나 " + me + ", 일 " + job + ")."; },
+      energySame: function (v) { return "에너지가 몰리는 때도 같아요: " + v + "."; },
+      energyBothVary: "에너지가 몰리는 때는 나도, 이 일도 그때그때 달라요.",
+      energyVaries: function (me, job) { return "에너지 시간대는 나 '" + me + "', 일 " + ko("'" + job + "'", "이에요", "예요") + ". 한쪽이 그때그때 달라서 차이가 크지 않을 수 있어요."; },
+      energyDiff: function (me, job) { return "에너지 시간대는 달라요: 나는 " + me + ", 이 일은 " + job + "에 가장 많은 걸 요구했어요."; },
+      ownFit: function (v) { return "직접 고른 '이 일이 내 생활 방식과 맞았던 정도'는 7점 중 " + v + "점이었어요."; },
+      caveat: "이 비교는 continuum-protocol이 아직 검증하고 있는 방식이에요. 지금 하신 응답이 바로 그 검증에 쓰여요. 같은 사람이라도 시기에 따라 리듬은 달라질 수 있어요.",
+      shareTitle: "주변에도 물어봐 주세요",
+      shareText: "다양한 사람이 답할수록 이 비교가 실제 경험과 맞는지 더 잘 알 수 있어요.",
+      share: "설문 링크 공유하기",
+      copied: "링크를 복사했어요",
+      deletionWith: function (word) { return "나중에 응답을 지우고 싶으면, 삭제 요청 양식에 암호 단어 " + ko("'" + word + "'", "을", "를") + " 입력하세요."; },
+      deletionWithout: "암호 단어를 정하지 않아서, 이 응답은 나중에 골라서 지울 수 없어요.",
+      deletionLink: "삭제 요청 양식",
+      project: "프로젝트 보기"
+    },
+    en: {
+      htmlLang: "en",
+      other: "한국어",
+      title: "Does your work fit your rhythm?",
+      lead: "A 10-minute survey that sets you and your job side by side on five rhythms. When you finish, you'll see where they're close and where they're far apart.",
+      me: "You", job: "Job",
+      facts: [
+        "Anonymous. We don't ask for your name, email, employer, or job title.",
+        "About 10 minutes. You can stop at any point. Nothing is saved until you submit.",
+        "Only summary results are published. Individual answers are never posted.",
+        "If you might want your answer deleted later, choose a code word at the end.",
+        "Who can take part: you're 18 or older and have worked at least one job (part-time and freelance count) for 3 months or more."
+      ],
+      about: "This survey is part of continuum-protocol, an open-source project that asks whether jobs fit people's rhythms of living, not just their skills.",
+      start: "Start the survey",
+      next: "Next", back: "Back",
+      submit: "Submit and see your result", sending: "Sending",
+      required: "Please answer this question.",
+      needConsent: "You need to agree before you can start.",
+      sendFailed: "Your answers didn't go through. Check your connection and press the button again.",
+      optional: "(optional)",
+      resultTitle: "Your rhythm and this job's",
+      resultLead: "Not a score or a verdict: just where the two are close and where they're far apart.",
+      legendMe: "You", legendJob: "This job",
+      firstJob: "First job", secondJob: "Second job",
+      dims: {
+        energy: "When energy peaks",
+        flex: "Schedule flexibility",
+        people: "Working with others",
+        change: "Amount of change",
+        pace: "Pace"
+      },
+      ends: {
+        flex: ["Fixed hours", "Your own hours"],
+        people: ["Mostly alone", "Always together"],
+        change: ["Steady routine", "Frequent change"],
+        pace: ["Steady and even", "Sprints and rest"]
+      },
+      energyNames: ["Morning", "Afternoon", "Evening or night", "It varies"],
+      values: function (me, job) { return "you " + me + ", job " + job; },
+      farthest: function (name, me, job, toward) {
+        return "The biggest gap is in " + name.toLowerCase() + ". You're at " + me + " and this job is at " + job + ", so the job leans more toward “" + toward.toLowerCase() + "” than you do.";
+      },
+      allClose: "All four are within two steps of each other. The rhythm gap with this job is small.",
+      closest: function (name, me, job) { return "The closest match is " + name.toLowerCase() + " (you " + me + ", job " + job + ")."; },
+      energySame: function (v) { return "Your energy peaks at the same time, too: " + v.toLowerCase() + "."; },
+      energyBothVary: "Both your energy and this job's demands vary across the day.",
+      energyVaries: function (me, job) { return "Energy timing: you “" + me.toLowerCase() + "”, the job “" + job.toLowerCase() + "”. One of them varies, so the gap may be small."; },
+      energyDiff: function (me, job) { return "Your energy timing differs: you peak in the " + me.toLowerCase() + ", and this job demanded the most in the " + job.toLowerCase() + "."; },
+      ownFit: function (v) { return "You rated how well this job fit the way you live at " + v + " out of 7."; },
+      caveat: "This comparison is the method continuum-protocol is still testing, and your answers are part of that test. The same person's rhythm can change over time.",
+      shareTitle: "Ask a few others too",
+      shareText: "The more kinds of people answer, the better we can tell whether this comparison matches real experience.",
+      share: "Share the survey link",
+      copied: "Link copied",
+      deletionWith: function (word) { return "To delete your answer later, enter your code word “" + word + "” in the deletion form."; },
+      deletionWithout: "You didn't choose a code word, so this answer can't be picked out and deleted later.",
+      deletionLink: "Deletion form",
+      project: "See the project"
+    }
+  };
+
+  var PAGE_ORDER = ["self", "job_a", "job_b", "last"];
+  var DIMS = ["flex", "people", "change", "pace"];
+
+  // Korean particles depend on whether the last syllable has a final consonant.
+  var NUMBER_HAS_FINAL = [true, true, false, true, false, false, true, true, true, false, true];
+  function hasFinal(word) {
+    var s = String(word).replace(/['"\u201c\u201d\s.)]+$/, "");
+    if (/^\d+$/.test(s)) { return NUMBER_HAS_FINAL[Number(s) % 11]; }
+    var c = s.charCodeAt(s.length - 1);
+    if (c >= 0xac00 && c <= 0xd7a3) { return (c - 0xac00) % 28 !== 0; }
+    return false;
+  }
+  function ko(word, withFinal, withoutFinal) { return word + (hasFinal(word) ? withFinal : withoutFinal); }
+
+  var lang = (function () {
+    var p = new URLSearchParams(location.search).get("lang");
+    if (p === "ko" || p === "en") { return p; }
+    return (navigator.language || "ko").toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
+  })();
+  var answers = {};
+  var screen = "start";
+  var pageIndex = 0;
+  var resultTab = "a";
+  var app = document.getElementById("app");
+  var toggle = document.getElementById("lang-toggle");
+
+  function t() { return UI[lang]; }
+  function q(id) { return S.questions.filter(function (x) { return x.id === id; })[0]; }
+  function questionsOn(page) { return S.questions.filter(function (x) { return x.page === page; }); }
+  function optedIn() { return answers.b_opt_in === 0; }
+  function pagesToShow() { return PAGE_ORDER.filter(function (p) { return p !== "job_b" || optedIn(); }); }
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (k) {
+        if (k === "text") { node.textContent = attrs[k]; }
+        else if (k.indexOf("on") === 0) { node.addEventListener(k.slice(2), attrs[k]); }
+        else { node.setAttribute(k, attrs[k]); }
+      });
+    }
+    (children || []).forEach(function (c) { if (c) { node.appendChild(typeof c === "string" ? document.createTextNode(c) : c); } });
+    return node;
+  }
+  function svg(tag, attrs) {
+    var node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    Object.keys(attrs || {}).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+    return node;
+  }
+
+  function setLang(next) {
+    lang = next;
+    document.documentElement.lang = t().htmlLang;
+    document.title = t().title;
+    toggle.textContent = t().other;
+    render();
+  }
+  toggle.addEventListener("click", function () { setLang(lang === "ko" ? "en" : "ko"); });
+
+  function render(keepScroll) {
+    document.body.classList.toggle("is-job", screen === "page" && (pagesToShow()[pageIndex] === "job_a" || pagesToShow()[pageIndex] === "job_b"));
+    app.innerHTML = "";
+    if (screen === "start") { renderStart(); }
+    else if (screen === "page") { renderPage(); }
+    else { renderResult(); }
+    if (!keepScroll) { window.scrollTo(0, 0); }
+  }
+
+  function walkers() {
+    var s = svg("svg", { "class": "walkers", viewBox: "0 0 320 76", "aria-hidden": "true", preserveAspectRatio: "xMinYMid meet" });
+    s.appendChild(svg("line", { "class": "track", x1: 8, y1: 52, x2: 312, y2: 52 }));
+    [["g-me", "me", t().me], ["g-job", "job", t().job]].forEach(function (w) {
+      var g = svg("g", { "class": w[0] });
+      g.appendChild(svg("circle", { "class": w[1], cx: 30, cy: 52, r: 10 }));
+      var label = svg("text", { x: 30, y: 30, "text-anchor": "middle" });
+      label.textContent = w[2];
+      g.appendChild(label);
+      s.appendChild(g);
+    });
+    return s;
+  }
+
+  function renderStart() {
+    var consentQ = q("consent");
+    var box = el("input", { type: "checkbox", id: "consent" });
+    box.checked = answers.consent === 0;
+    var err = el("p", { "class": "error", role: "alert" });
+    app.appendChild(walkers());
+    app.appendChild(el("h1", { text: t().title }));
+    app.appendChild(el("p", { "class": "lead", text: t().lead }));
+    app.appendChild(el("p", { "class": "muted", text: t().about }));
+    app.appendChild(el("ul", { "class": "facts" }, t().facts.map(function (f) { return el("li", { text: f }); })));
+    app.appendChild(el("label", { "class": "option consent", "for": "consent" }, [box, el("span", { text: consentQ[lang] })]));
+    app.appendChild(err);
+    app.appendChild(el("div", { "class": "actions" }, [
+      el("button", { "class": "primary", type: "button", text: t().start, onclick: function () {
+        if (!box.checked) { err.textContent = t().needConsent; box.focus(); return; }
+        answers.consent = 0;
+        screen = "page"; pageIndex = 0; render();
+      } })
+    ]));
+  }
+
+  function progress(current) {
+    var bar = el("div", { "class": "progress", "aria-hidden": "true" });
+    PAGE_ORDER.forEach(function (p) {
+      var cls = "";
+      if (p === "job_b" && answers.b_opt_in === 1) { cls = "skip"; }
+      else if (PAGE_ORDER.indexOf(p) <= PAGE_ORDER.indexOf(current)) { cls = "done"; }
+      bar.appendChild(el("span", { "class": cls }));
+    });
+    return bar;
+  }
+
+  function questionField(question) {
+    var label = question[lang];
+    var optionalMark = !question.required && label.indexOf("(") !== 0 ? " " + t().optional : "";
+    var legend = el("legend", {}, [label, optionalMark ? el("span", { "class": "optional", text: optionalMark }) : null]);
+    var fs = el("fieldset", { id: "q-" + question.id }, [legend]);
+    var type = question.type;
+    if (type === "choice" || type === "gate") {
+      var list = el("div", { "class": "options" });
+      question[lang + "_choices"].forEach(function (choice, i) {
+        var input = el("input", { type: "radio", name: question.id, value: String(i) });
+        input.checked = answers[question.id] === i;
+        input.addEventListener("change", function () { answers[question.id] = i; });
+        list.appendChild(el("label", { "class": "option" }, [input, el("span", { text: choice })]));
+      });
+      fs.appendChild(list);
+    } else if (type === "scale10" || type === "scale7") {
+      var lo = type === "scale10" ? 0 : 1, hi = type === "scale10" ? 10 : 7;
+      var row = el("div", { "class": "scale " + (type === "scale10" ? "n11" : "n7") });
+      for (var n = lo; n <= hi; n++) {
+        (function (value) {
+          var input = el("input", { type: "radio", name: question.id, value: String(value), "aria-label": String(value) });
+          input.checked = answers[question.id] === value;
+          input.addEventListener("change", function () { answers[question.id] = value; });
+          row.appendChild(el("label", { "class": "tick" }, [input, el("span", { text: String(value) })]));
+        })(n);
+      }
+      fs.appendChild(row);
+      if (question[lang + "_low"] || question[lang + "_high"]) {
+        fs.appendChild(el("div", { "class": "ends" }, [el("span", { text: question[lang + "_low"] }), el("span", { text: question[lang + "_high"] })]));
+      }
+    } else if (type === "paragraph" || type === "text") {
+      var field = type === "paragraph" ? el("textarea", { rows: "3" }) : el("input", { type: "text", autocomplete: "off" });
+      field.value = answers[question.id] || "";
+      field.setAttribute("aria-label", label);
+      field.addEventListener("input", function () { answers[question.id] = field.value; });
+      fs.appendChild(field);
+    }
+    return fs;
+  }
+
+  function missingOn(page) {
+    return questionsOn(page).filter(function (x) {
+      return x.required && (answers[x.id] === undefined || answers[x.id] === "");
+    });
+  }
+
+  function renderPage() {
+    var pages = pagesToShow();
+    var page = pages[pageIndex];
+    var meta = S.pages[page][lang];
+    app.appendChild(progress(page));
+    app.appendChild(el("h2", { text: meta[0] }));
+    if (meta[1]) { app.appendChild(el("p", { "class": "page-help", text: meta[1] })); }
+    var form = el("div");
+    questionsOn(page).forEach(function (x) { form.appendChild(questionField(x)); });
+    app.appendChild(form);
+    var err = el("p", { "class": "error", role: "alert" });
+    var isLast = pageIndex === pages.length - 1;
+    var nextBtn = el("button", { "class": "primary", type: "button", text: isLast ? t().submit : t().next });
+    nextBtn.addEventListener("click", function () {
+      var missing = missingOn(page);
+      Array.prototype.forEach.call(app.querySelectorAll("fieldset"), function (f) { f.classList.remove("missing"); });
+      if (missing.length) {
+        missing.forEach(function (x) { document.getElementById("q-" + x.id).classList.add("missing"); });
+        err.textContent = t().required;
+        document.getElementById("q-" + missing[0].id).scrollIntoView({ block: "center" });
+        return;
+      }
+      if (!optedIn()) { Object.keys(answers).forEach(function (k) { if (k.indexOf("b_") === 0 && k !== "b_opt_in") { delete answers[k]; } }); }
+      if (!isLast) { pageIndex = Math.min(pageIndex + 1, pagesToShow().length - 1); render(); return; }
+      nextBtn.disabled = true; nextBtn.textContent = t().sending;
+      send().then(function () { screen = "result"; resultTab = "a"; render(); })
+        .catch(function () { err.textContent = t().sendFailed; nextBtn.disabled = false; nextBtn.textContent = t().submit; });
+    });
+    var buttons = [];
+    if (pageIndex > 0) {
+      buttons.push(el("button", { "class": "secondary", type: "button", text: t().back, onclick: function () { pageIndex -= 1; render(); } }));
+    } else {
+      buttons.push(el("button", { "class": "secondary", type: "button", text: t().back, onclick: function () { screen = "start"; render(); } }));
+    }
+    buttons.push(nextBtn);
+    app.appendChild(err);
+    app.appendChild(el("div", { "class": "actions" }, buttons));
+  }
+
+  function formBody() {
+    var form = S.forms[lang];
+    var body = new URLSearchParams();
+    S.questions.forEach(function (x) {
+      var v = answers[x.id];
+      if (v === undefined || v === "") { return; }
+      if (!optedIn() && x.page === "job_b") { return; }
+      var value = (x.type === "choice" || x.type === "gate" || x.type === "consent") ? x[lang + "_choices"][v] : String(v);
+      body.append("entry." + form.entries[x.id], value);
+    });
+    body.append("pageHistory", optedIn() ? "0,1,2,3,4" : "0,1,2,4");
+    body.append("fvv", "1");
+    return body;
+  }
+
+  function send() {
+    return fetch(S.forms[lang].action, { method: "POST", mode: "no-cors", body: formBody() });
+  }
+  window.__surveyFormBody = function () { return formBody().toString(); };
+
+  function compare(prefix) {
+    var rows = DIMS.map(function (d) {
+      return { id: d, me: answers["self_" + d], job: answers[prefix + "_" + d] };
+    });
+    rows.forEach(function (r) { r.gap = Math.abs(r.job - r.me); });
+    var sorted = rows.slice().sort(function (a, b) { return b.gap - a.gap; });
+    return {
+      rows: rows,
+      farthest: sorted[0],
+      closest: sorted[sorted.length - 1],
+      energyMe: answers.self_energy,
+      energyJob: answers[prefix + "_energy"],
+      fit: answers[prefix + "_fit"]
+    };
+  }
+
+  function track(row, isFarthest) {
+    var wrap = el("div", { "class": "dim" + (isFarthest ? " farthest" : "") });
+    wrap.appendChild(el("div", { "class": "dim-head" }, [
+      el("span", { "class": "dim-name", text: t().dims[row.id] }),
+      el("span", { "class": "dim-values", text: t().values(row.me, row.job) })
+    ]));
+    var s = svg("svg", { viewBox: "0 0 300 34", preserveAspectRatio: "none", role: "img", "aria-label": t().dims[row.id] + ": " + t().values(row.me, row.job) });
+    var x = function (v) { return 12 + v * 27.6; };
+    s.appendChild(svg("line", { "class": "track", x1: 12, y1: 17, x2: 288, y2: 17 }));
+    s.appendChild(svg("line", { "class": "gap", x1: x(row.me), y1: 17, x2: x(row.job), y2: 17 }));
+    s.appendChild(svg("circle", { "class": "job", cx: x(row.job), cy: 17, r: 8 }));
+    s.appendChild(svg("circle", { "class": "me", cx: x(row.me), cy: 17, r: row.me === row.job ? 4.5 : 7 }));
+    wrap.appendChild(s);
+    wrap.appendChild(el("div", { "class": "ends" }, [el("span", { text: t().ends[row.id][0] }), el("span", { text: t().ends[row.id][1] })]));
+    return wrap;
+  }
+
+  function renderResult() {
+    app.appendChild(el("h1", { text: t().resultTitle }));
+    app.appendChild(el("p", { "class": "lead", text: t().resultLead }));
+    if (optedIn()) {
+      var tabs = el("div", { "class": "tabs", role: "tablist" });
+      [["a", t().firstJob], ["b", t().secondJob]].forEach(function (tab) {
+        tabs.appendChild(el("button", { type: "button", role: "tab", "aria-selected": String(resultTab === tab[0]), text: tab[1], onclick: function () { resultTab = tab[0]; render(true); } }));
+      });
+      app.appendChild(tabs);
+    }
+    var c = compare(resultTab);
+    var summary = el("div", { "class": "summary" });
+    if (c.farthest.gap >= 3) {
+      var toward = t().ends[c.farthest.id][c.farthest.job > c.farthest.me ? 1 : 0];
+      summary.appendChild(el("p", { text: t().farthest(t().dims[c.farthest.id], c.farthest.me, c.farthest.job, toward) }));
+      summary.appendChild(el("p", { text: t().closest(t().dims[c.closest.id], c.closest.me, c.closest.job) }));
+    } else {
+      summary.appendChild(el("p", { text: t().allClose }));
+    }
+    var names = t().energyNames;
+    var eMe = names[c.energyMe], eJob = names[c.energyJob];
+    if (c.energyMe === 3 && c.energyJob === 3) { summary.appendChild(el("p", { text: t().energyBothVary })); }
+    else if (c.energyMe === c.energyJob) { summary.appendChild(el("p", { text: t().energySame(eMe) })); }
+    else if (c.energyMe === 3 || c.energyJob === 3) { summary.appendChild(el("p", { text: t().energyVaries(eMe, eJob) })); }
+    else { summary.appendChild(el("p", { text: t().energyDiff(eMe, eJob) })); }
+    app.appendChild(summary);
+
+    app.appendChild(el("div", { "class": "legend-row", "aria-hidden": "true" }, [
+      el("span", {}, [el("span", { "class": "dot me" }), t().legendMe]),
+      el("span", {}, [el("span", { "class": "dot job" }), t().legendJob])
+    ]));
+    c.rows.forEach(function (r) { app.appendChild(track(r, c.farthest.gap >= 3 && r.id === c.farthest.id)); });
+    app.appendChild(el("p", { "class": "muted", text: t().ownFit(c.fit) }));
+
+    var note = el("div", { "class": "note" });
+    note.appendChild(el("p", { text: t().caveat }));
+    var word = (answers.code_word || "").trim();
+    var del = el("p", {}, [word ? t().deletionWith(word) : t().deletionWithout]);
+    if (word) { del.appendChild(document.createTextNode(" ")); del.appendChild(el("a", { href: S.deletionForm, target: "_blank", rel: "noopener", text: t().deletionLink })); }
+    note.appendChild(del);
+    app.appendChild(note);
+
+    var share = el("div", { "class": "share" });
+    share.appendChild(el("h2", { text: t().shareTitle }));
+    share.appendChild(el("p", { "class": "muted", text: t().shareText }));
+    var shareBtn = el("button", { "class": "primary", type: "button", text: t().share });
+    shareBtn.addEventListener("click", function () {
+      var url = location.origin + location.pathname;
+      if (navigator.share) { navigator.share({ title: t().title, url: url }).catch(function () {}); return; }
+      if (navigator.clipboard) { navigator.clipboard.writeText(url).then(function () { shareBtn.textContent = t().copied; }); }
+    });
+    share.appendChild(el("div", { "class": "actions" }, [
+      shareBtn,
+      el("a", { "class": "secondary", href: "https://github.com/DevAaronJeong/continuum-protocol", text: t().project, style: "text-decoration:none;display:inline-flex;align-items:center" })
+    ]));
+    app.appendChild(share);
+  }
+
+  setLang(lang);
+})();
+</script>
+</body>
+</html>

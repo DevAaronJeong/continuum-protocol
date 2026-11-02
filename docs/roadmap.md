@@ -115,6 +115,7 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 - Compare which metric's alignment score tracks the fit ratings best
 - Write down the hypothesis and decision rule before collecting any data
 - Plan, written before data collection: [experiments/retrospective-fit-survey.md](experiments/retrospective-fit-survey.md)
+- Respondents see where they and their job are close and far apart after submitting, which gives them a reason to share the survey
 
 **Hypothesis:** Manhattan-based alignment tracks reported fit better than cosine.
 

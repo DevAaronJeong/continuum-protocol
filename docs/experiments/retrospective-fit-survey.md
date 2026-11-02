@@ -2,7 +2,7 @@
 
 > **Status:** Planned. This plan was written and committed before any data was collected (November 2026).
 >
-> Questionnaire: [retrospective-fit-survey-questions.md](retrospective-fit-survey-questions.md) · Forms: [`examples/survey_forms.gs`](../../examples/survey_forms.gs) · Analysis: [`examples/survey_analysis.py`](../../examples/survey_analysis.py)
+> Questionnaire: [retrospective-fit-survey-questions.md](retrospective-fit-survey-questions.md) · Forms: [`examples/survey_forms.gs`](../../examples/survey_forms.gs) · Survey page: [`site/survey/`](../../site/survey/) · Analysis: [`examples/survey_analysis.py`](../../examples/survey_analysis.py)
 
 ---
 
@@ -24,7 +24,7 @@ There's no budget for paid respondents, so the survey stays open for months and 
 |---|---|
 | Nov 2, 2026 | Forms created by running `examples/survey_forms.gs` in Google Apps Script (done) |
 | Nov 2–9 | Pre-check: watch 2–3 people answer while they think aloud, plus a few more online. Are the questions clear, and does it take about 10 minutes? Their answers are not analyzed. |
-| Nov 10 | Last changes to the questions. The forms are created again from scratch so pre-check answers can't mix in. After this, nothing in this plan, the forms, or the analysis script changes. |
+| Nov 10 | Last changes to the questions. The forms are created again from scratch so pre-check answers can't mix in, and the survey page is pointed at the new forms. After this, nothing in this plan, the forms, the survey page, or the analysis script changes. |
 | **Nov 11** | **Survey opens** |
 | First Monday of each month | Check the **number** of responses only (see Stopping) |
 | **Mar 31, 2027** | **Survey closes** at the latest, or earlier once there are 100 complete responses |
@@ -37,6 +37,7 @@ There's no budget for paid respondents, so the survey stays open for months and 
 - **Who:** adults who have worked at least one job (part-time and freelance count) for 3 months or more.
 - **How they're reached (all free):** shared by friends and their friends, GitHub Discussions, Korean online communities (where their rules allow surveys), [SurveyCircle](https://www.surveycircle.com), and Reddit r/SampleSize. Korean and English versions.
 - **Target:** 100 complete responses, built up over the months the survey is open. Each project update posted on GitHub, X, or LinkedIn carries the survey link.
+- **Where people answer:** the survey page at https://devaaronjeong.github.io/continuum-protocol/survey/ ([`site/survey/`](../../site/survey/)). It asks the same questions in the same words as the Google Forms and sends the answers to them. After submitting, the page shows the person where they and their job are close and far apart on each dimension. **It appears only after the answers are sent, so it can't change them**, and it shows no overall score. Seeing their own comparison is also what gives people a reason to pass the survey on.
 
 **Who this really describes.** People who choose to answer a survey about whether their work fits them are likely to have strong feelings about it, often because it doesn't. Paid survey panels have their own lean as well. So the result describes **people who sought out a survey like this**, not workers in general. That is close to the people this protocol is meant for: people looking for work that fits better. Results will be written up with that scope.
 
@@ -115,7 +116,7 @@ A second job is used only if all of its required answers are present. Pre-check 
 
 ## Data handling
 
-- No names, emails, employers, or job titles are collected. The forms are created with email collection and sign-in turned off.
+- No names, emails, employers, or job titles are collected. The forms are created with email collection and sign-in turned off, and the survey page has no analytics or tracking: answers go only to the Google Form.
 - Responses stay in the maintainer's Google account. Raw exports never go on GitHub: keep them in `data/`, which git ignores.
 - What gets published: summary numbers, the analysis output, and the code. Free-text answers are only published as summarized themes, never quoted in a way that could identify someone.
 - Deletion: respondents can submit their code word through the separate deletion form. Matching responses are removed, and the analysis is re-run if it has already been done.
