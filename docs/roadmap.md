@@ -15,7 +15,7 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 - Ethics & privacy principles
 - Minimal matching algorithm prototype
 - Open questions document
-- Theory of fit as dynamic stability, with a Phase 0 simulation ([fit-as-stability.md](fit-as-stability.md))
+- Theory of fit as dynamic stability, with a synthetic simulation and a time-based stability check ([fit-as-stability.md](fit-as-stability.md))
 - Cosine vs. Manhattan comparison on synthetic data ([metric-analysis.md](metric-analysis.md), from [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4))
 - License: AGPL-3.0 for code, CC BY 4.0 for docs
 
@@ -30,12 +30,12 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 **What we learned since then:**
 - **The metric choice matters.** Cosine and Manhattan pick a different top match for about half of synthetic people. Whether Manhattan is the right choice still needs human data.
-- **Our Phase 0 stability check has a flaw.** The simulation measures $s_j$ in the order new levels first appear, not over time. In tests it labels steadily rising effort (burnout) as stable and noisy-but-flat effort as unstable. We'll discuss a time-based fix in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7) before changing it (Experiment 2.4).
+- **Our Phase 0 stability check had two flaws.** It measured $s_j$ in the order new levels first appear, not over time, so it labeled steadily rising effort (burnout) as stable and noisy-but-flat effort as unstable. And its "stable" synthetic case still drifted upward over long runs, as [@mwdelaney1325-cmd](https://github.com/mwdelaney1325-cmd) showed in [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4#issuecomment-7043217541). Experiment 2.4 replaced it with a check that reads the level, trend, and volatility of $K$ over time.
 - **Engagement is below the Phase 1 target.** One external person has engaged critically so far. The target is 10.
 
 **Next, in order** (no dates; this list gets updated as items finish):
 1. ~~Decide a license~~ ✅
-2. Fix the stability check (Experiment 2.4)
+2. ~~Fix the stability check (Experiment 2.4)~~ ✅
 3. Retrospective fit survey (Experiment 2.5)
 4. Weekly adjustment diary pilot (Experiment 2.6)
 5. Publish the results, including negative ones
@@ -103,11 +103,14 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 #### Experiment 2.4: Fix the Stability Check
 - Define $K(i)$ as a weekly self-report: "How much did you have to adjust yourself to your work this week?" (0–10)
-- Judge stability by the trend of $K$ over time after a settling period, and flag when that trend speeds up
-- Turn the Phase 0 failure cases into unit tests
-- Discuss with the model's original author in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7) first
+- Judge stability by the level, trend, and volatility of $K$ over time after a settling period, and flag when that trend speeds up
+- Make the stable synthetic case return to a fixed baseline instead of drifting slowly
+- Turn the Phase 0 failure cases, including the two from [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4#issuecomment-7043217541), into unit tests
+- Discussed with [@mwdelaney1325-cmd](https://github.com/mwdelaney1325-cmd), who proposed the level/trend/volatility split
 
 **Hypothesis:** A time-based check separates steady effort from rising effort, which the Phase 0 version could not.
+
+**Status:** Done on synthetic data ([fit-as-stability.md](fit-as-stability.md#reading-stability-from-a-finite-record)). With 50 episodes after settling it separates the synthetic kinds; with 8–12 it can't, at the noise level assumed.
 
 #### Experiment 2.5: Retrospective Fit Survey
 - 20–30 people, about 10 minutes, anonymous (no names, employers, or contact details)
@@ -120,7 +123,8 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 #### Experiment 2.6: Weekly Adjustment Diary (Pilot)
 - 5–10 volunteers, 6–8 weeks, one question per week (the $K(i)$ from 2.4)
 - Participants are identified only by a code word they choose
-- The first real test of fit as dynamic stability
+- 6–8 weeks is too short to tell rising from flat at the synthetic noise level ([table](fit-as-stability.md#3-how-many-episodes-does-the-check-need)), so the pilot measures how noisy real weekly answers are and how many people keep answering. That sizes a longer study.
+- The first real data on fit as dynamic stability
 
 **Hypothesis:** People whose fit feels wrong show rising $K$; people whose fit feels right settle.
 

@@ -68,6 +68,8 @@ People and organizations change over time.
 - **Good fit:** Adjustment demands ($s_j$) stay bounded: $|s_j| \le C$
 - **Bad fit:** Adjustment demands grow over time: $|s_j|$ increases
 
+*In practice:* a finite record can't prove boundedness, and first-arrival gaps alone can't tell bounded from rising, so the stability check reads the level, trend, and volatility of $K$ over time ([details](fit-as-stability.md#reading-stability-from-a-finite-record)).
+
 **This reframes burnout** not as "high effort" but as "unbounded acceleration in effort."
 
 **Open questions:**

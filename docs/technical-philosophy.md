@@ -204,6 +204,8 @@ $$|s_j| \text{ grows with } j$$
 
 Adjustment demands compound—friction amplifies.
 
+*In practice:* a finite record can't prove boundedness, and first-arrival gaps alone can't tell bounded from rising, so the stability check reads the level, trend, and volatility of $K$ over time ([details](fit-as-stability.md#reading-stability-from-a-finite-record)).
+
 ### Redefining Burnout
 
 This model reframes **burnout** not as:
@@ -234,7 +236,7 @@ The second question is closer to the subjective reality of sustainable work.
 
 2. **How do we measure this in practice?**
    - Track weekly: "How much did you have to adjust today?"
-   - Plot $s_j$ over time
+   - Plot $K$ over time and read its trend after the settling period
    - Define "settling period" duration
 
 3. **Does this model generalize across domains?**
