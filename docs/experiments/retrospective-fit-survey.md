@@ -22,11 +22,11 @@ There's no budget for paid respondents, so the survey stays open for months and 
 
 | Date | Step |
 |---|---|
-| Nov 2, 2026 | Forms created by running `examples/survey_forms.gs` in Google Apps Script (done) |
-| Nov 2–9 | Pre-check: watch 2–3 people answer while they think aloud, plus a few more online. Are the questions clear, and does it take about 10 minutes? Their answers are not analyzed. |
-| Nov 10 | Last changes to the questions. The forms are created again from scratch so pre-check answers can't mix in, and the survey page is pointed at the new forms. After this, nothing in this plan, the forms, the survey page, or the analysis script changes. |
-| **Nov 11** | **Survey opens** |
-| First Monday of each month | Check the **number** of responses only (see Stopping) |
+| Nov 2, 2026 | First forms created by running `examples/survey_forms.gs` in Google Apps Script, for the pre-check (done) |
+| Nov 2–22 | Pre-check: two people answered the first forms online. Neither left a comment pointing to a problem, so the questions are unchanged. Their answers are not analyzed. (The original schedule had the survey opening on Nov 11; it slipped.) |
+| Nov 23 | The forms are created again from scratch so pre-check answers can't mix in, and the survey page is pointed at the new forms (done). After this, nothing in this plan, the forms, the survey page, or the analysis script changes. |
+| **Dec 1** | **Survey opens** |
+| First Monday of each month, from Jan 4, 2027 | Check the **number** of responses only (see Stopping) |
 | **Mar 31, 2027** | **Survey closes** at the latest, or earlier once there are 100 complete responses |
 | After closing | Analysis runs once; results are published, whatever they show |
 
@@ -102,7 +102,7 @@ A response is excluded if:
 - the attention item (`a_check`) isn't 4
 - every 0–10 answer in the response is the same number
 
-A second job is used only if all of its required answers are present. Pre-check answers (Nov 2–4) are not analyzed. There are no other exclusions. The number excluded for each reason is reported.
+A second job is used only if all of its required answers are present. Pre-check answers went to the first forms and are not analyzed. There are no other exclusions. The number excluded for each reason is reported.
 
 ## Stopping
 
