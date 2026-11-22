@@ -57,3 +57,7 @@ synthetic_dataset.json
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Survey responses (never commit raw data)
+data/
+survey_responses*.csv

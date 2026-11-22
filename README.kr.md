@@ -336,7 +336,7 @@ A: 성능보다 가독성. 이것은 연구이지 프로덕션이 아닙니다. 
 
 | 대상 | 라이선스 |
 |------|---------|
-| 코드 (`src/`, `examples/`) | [GNU AGPL-3.0-or-later](LICENSE) |
+| 코드 (`src/`, `examples/`, `site/`) | [GNU AGPL-3.0-or-later](LICENSE) |
 | 문서와 그림 (`*.md`, `docs/`) | [CC BY 4.0](LICENSE-docs) |
 
 **왜 나눴나요?**

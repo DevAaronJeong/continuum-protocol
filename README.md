@@ -339,7 +339,7 @@ A: Readability over performance. This is research, not production. See [Why Pyth
 
 | What | License |
 |------|---------|
-| Code (`src/`, `examples/`) | [GNU AGPL-3.0-or-later](LICENSE) |
+| Code (`src/`, `examples/`, `site/`) | [GNU AGPL-3.0-or-later](LICENSE) |
 | Documentation and figures (`*.md`, `docs/`) | [CC BY 4.0](LICENSE-docs) |
 
 **Why the split?**

@@ -113,10 +113,12 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 **Status:** Done on synthetic data ([fit-as-stability.md](fit-as-stability.md#reading-stability-from-a-finite-record)). With 50 episodes after settling it separates the synthetic kinds; with 8–12 it can't, at the noise level assumed.
 
 #### Experiment 2.5: Retrospective Fit Survey
-- 20–30 people, about 10 minutes, anonymous (no names, employers, or contact details)
-- Each person describes their own rhythm and 1–2 past or current jobs on the same dimensions, then rates how well each job fit (1–7)
+- About 100 people through free channels; opens December 1, 2026 and stays open until 100 responses or March 31, 2027; about 10 minutes, anonymous (no names, employers, or contact details)
+- Each person describes their own rhythm, their current or most recent job, and optionally a contrasting job on the same dimensions, then rates how well each job fit (1–7)
 - Compare which metric's alignment score tracks the fit ratings best
 - Write down the hypothesis and decision rule before collecting any data
+- Plan, written before data collection: [experiments/retrospective-fit-survey.md](experiments/retrospective-fit-survey.md)
+- Respondents see where they and their job are close and far apart after submitting, which gives them a reason to share the survey
 
 **Hypothesis:** Manhattan-based alignment tracks reported fit better than cosine.
 
