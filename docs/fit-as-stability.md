@@ -2,6 +2,8 @@
 
 > **Note:** The core mathematical model in this document was proposed by community member [@mwdelaney1325-cmd](https://github.com/mwdelaney1325-cmd) in [Discussion #7](https://github.com/DevAaronJeong/continuum-protocol/discussions/7).
 
+> **Correction (November 2026):** The first Phase 0 simulation had two problems, both found by [@mwdelaney1325-cmd](https://github.com/mwdelaney1325-cmd) in [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4#issuecomment-7043217541): its "stable" trajectories still drifted upward over long runs, and its stability check read levels in the order they first appeared instead of over time. The simulation, the stability check, and Figures 1–3 were revised. See [Correction (November 2026)](#correction-november-2026).
+
 ---
 
 ## The Core Insight
@@ -72,45 +74,107 @@ graph TD
     style Unstable fill:#f8d7da,stroke:#dc3545
 ```
 
+### Reading Stability From a Finite Record
+
+The criterion above is about the whole sequence, however long it runs. Any real record is finite, so two limits apply:
+
+1. **No finite window proves boundedness.** Whatever bound a record seems to respect, a longer record could exceed it. A record can only show how $K$ behaved while it was observed.
+2. **First-arrival gaps alone cannot tell bounded from rising.** The levels $a_j$ are recorded when they first appear, and the time between them is dropped. With a quantize step of 0.5:
+
+| $K$ over time | First-arrival $s_j$ | First-arrival reading | What actually happens |
+|---|---|---|---|
+| 0, 2, 1 | −3 | unstable | adjustment stays between 0 and 2 |
+| 0, 1, 2, 3, 4 | 0, 0, 0 | stable | adjustment rises every episode |
+
+(The formulation writes $a_1 < a_2 < \cdots$, but new levels only arrive in that order while $K$ keeps reaching new highs.)
+
+So the stability check reads $K$ against time, after a settling period:
+
+| Quantity | What it is | Question it answers |
+|---|---|---|
+| **Level** | Median of $K$ | How much adjustment, typically? |
+| **Trend** | Theil–Sen slope of $K$ per episode (the median of all pairwise slopes, so one bad week can't drag it far) | Is adjustment rising, flat, or easing? |
+| **Volatility** | Typical distance from the trend line | How much does it swing from episode to episode? |
+| **Trend change** | Slope in the later half minus slope in the earlier half | Is the rise speeding up? |
+
+A trend within ±0.05 points per episode (one point on a 0–10 scale over 20 episodes) reads as *flat*. Above that it reads as *rising*, or *accelerating* if the later half rises faster by more than 0.05. These cutoffs are starting values chosen on synthetic data, to be revisited with real diary data.
+
+Every label describes the observed window only. "Flat" means no clear trend so far, not "bounded forever."
+
+First-arrival gaps stay in the code as an auxiliary description of how new levels arrive.
+
 ---
 
 ## Visualizing the Theory (Phase 0 Simulation)
 
-To validate our model computationally, we generated synthetic trajectories representing stable and unstable fits.
+To check that the measurements behave as intended, we generated synthetic trajectories on the 0–10 scale planned for the diary study: one that settles to a fixed baseline, and one whose baseline keeps rising. They illustrate the model's assumptions; they are not evidence about people (see [Philosophical Constraints](#philosophical-constraints-the-trap-of-solving-people)).
 
-### 1. Stable Fit (Sustainable)
+### Correction (November 2026)
 
-The system adapts to friction. The work-state $K(i)$ fluctuates but remains bounded. Acceleration $s_j$ stays near zero.
+The first version of this section had two problems, both found by [@mwdelaney1325-cmd](https://github.com/mwdelaney1325-cmd) in [Issue #4](https://github.com/DevAaronJeong/continuum-protocol/issues/4#issuecomment-7043217541):
 
-**Characteristics:**
-- K(i): Oscillates within range (0-2)
-- s_j: ≈ 0 (no acceleration)
-- max(|s_j|): 0.0
-- **Meaning:** "Same effort today as yesterday"
+1. **The "stable" generator drifted.** It used $K_i = (1 - 0.2s)\,K_{i-1} + 0.03(1-s)\,i + \text{noise}$. For any $0 < s < 1$ this grows like $\frac{0.15(1-s)}{s}\,i$: at $s = 0.8$ with the noise off, $K$ reaches 1.64 by episode 50 and 18.52 by episode 500. The "stable" case was slow drift, not a return to a fixed level. Over the 50 episodes plotted, the drift was small enough to look bounded.
+2. **The check ignored time.** It read stability from first-arrival gaps alone, which fails in both directions (see [Reading Stability From a Finite Record](#reading-stability-from-a-finite-record)).
+
+What changed:
+- The stable case now returns to a fixed baseline (mean reversion). With the noise off, it ends at its baseline however long it runs. The unstable cases are a baseline that keeps rising (persistent drift) and one that rises faster and faster.
+- The stability check reads level, trend, and volatility over time. First-arrival gaps are kept as an auxiliary measure.
+- His two examples are unit tests.
+- Figures 1–3 were regenerated. The originals are in the Git history.
+
+### 1. Stable Fit (Settling)
+
+$K(i)$ starts high, as in a new job, then returns to a fixed baseline. It keeps fluctuating, but the fluctuations don't build into a trend.
+
+**Readings (this run):**
+- Level 2.9, trend −0.014 per episode, volatility 0.38
+- Time-based check: **flat**
+- First-arrival check: unstable (noise produces new levels out of order)
+- **Meaning:** "About the same effort now as a few months ago"
 
 ![Stable Fit Trajectory](assets/Figure_1.png)
 
 ---
 
-### 2. Unstable Fit (Burnout)
+### 2. Unstable Fit (Drifting)
 
-Adjustment demands compound. The work-state $K(i)$ grows monotonically. Acceleration $s_j$ shows a distinct spike, indicating the system is losing control.
+The baseline rises by 0.08 per episode, so adjustment climbs steadily: about 4 points over 50 episodes.
 
-**Characteristics:**
-- K(i): Monotonic growth (0 → 15)
-- s_j: Spike at end (0 → 0.5)
-- max(|s_j|): 0.5
+**Readings (this run):**
+- Level 5.0, trend +0.077 per episode (the true rate is 0.08), volatility 0.47
+- Time-based check: **rising**
+- First-arrival check: unstable, the same reading it gave the settling case
 - **Meaning:** "Need more effort each week to stay functional"
 
 ![Unstable Fit Trajectory](assets/Figure_2.png)
 
 ---
 
-### 3. Hypothesis Check
+### 3. How Many Episodes Does the Check Need?
 
-This visualization shows what we **expect** to find in real data if our hypothesis (Initial Distance → Long-term Instability) holds true.
+Share of synthetic trajectories the time-based check calls *rising* (including *accelerating*), by the number of episodes after a 4-episode settling period. 500 trajectories per cell; noise of 0.5 points per episode.
+
+| Kind | 8 episodes | 12 | 26 | 50 |
+|---|---:|---:|---:|---:|
+| Settling | 29% | 19% | 2% | 0% |
+| Noisy but flat (noise 1.2) | 40% | 34% | 23% | 3% |
+| Drifting (+0.08 per episode) | 56% | 64% | 85% | 100% |
+| Accelerating | 38% | 39% | 62% | 100% |
+
+- **With 50 episodes, the check separates the kinds.** Settling and noisy-but-flat trajectories are rarely called rising; drifting and accelerating ones always are. Telling *accelerating* from plain *rising* is harder: 83% of accelerating trajectories are called accelerating, and so are 12% of drifting ones.
+- **With 8–12 episodes, it can't.** About a fifth to a third of settling trajectories are called rising, and only half to two-thirds of drifting ones are.
+- **The first-arrival check doesn't separate them at any length.** It calls 65–100% of every kind unstable.
+- **These rates depend on the noise level**, which is made up here. How noisy real weekly answers are is unknown; measuring that is the first job of the diary pilot (Roadmap Experiment 2.6).
+
+---
+
+### 4. Hypothesis Check
+
+This visualization shows what we **expect** to find in real data if the assumption (larger initial distance → rising adjustment) holds. Each synthetic pair gets a drift that grows with its distance beyond 0.3, and the time-based check reads the result.
 
 **⚠️ Important:** The correlation shown here is built into the simulation as an assumption. Real validation requires actual human data where the relationship is discovered, not assumed.
+
+It also shows a limit of the cutoff: pairs that drift slowly (below 0.05 per episode) read as flat.
 
 ![Hypothesis Visualization](assets/Figure_3.png)
 
@@ -124,11 +188,16 @@ python examples/stability_simulation.py
 
 # Run unit tests
 python examples/stability_simulation.py --test
+
+# Regenerate Figures 1-3 in docs/assets/
+python examples/stability_simulation.py --save-figures
 ```
 
 **What you'll see:**
-- Stable vs unstable trajectory plots
-- Quantize sensitivity analysis
+- Settling, drifting, and accelerating trajectories, read by both checks
+- The Issue #4 examples
+- The episode-count table above
+- Quantize sensitivity (auxiliary measure only)
 - Hypothesis visualization (with warnings)
 
 ---
@@ -167,9 +236,9 @@ These metrics serve different purposes:
 | Metric | Measures | When to Use |
 |--------|----------|-------------|
 | **Manhattan Distance** | Initial alignment | Screening, first-pass matching |
-| **Stability ($s_j$)** | Long-term sustainability | Predicting burnout risk, retention |
+| **Stability (trend of $K$ over time)** | Long-term sustainability | Predicting burnout risk, retention |
 
-**Hypothesis:** Large Manhattan Distance may correlate with unbounded $s_j$, but this is empirically testable.
+**Hypothesis:** Large Manhattan Distance may correlate with rising $K$, but this is empirically testable.
 
 ---
 
@@ -193,38 +262,41 @@ Benefit: Directly targets sustainability, not just initial fit.
 
 ### Proposed Experiment
 
-**Track over time (e.g., 12 weeks):**
+**Track over time (months, not weeks; see [How Many Episodes Does the Check Need?](#3-how-many-episodes-does-the-check-need)):**
 
 1. **Weekly question:** "How much did you have to adjust this week to stay functional?"
    - Scale: 0 (no adjustment) to 10 (constant correction)
 
-2. **Plot the sequence:** $K(1), K(2), \ldots, K(12)$
+2. **Plot the sequence:** $K(1), K(2), \ldots$
 
-3. **Extract new states:** $a_1, a_2, \ldots$ (first-time readout levels)
+3. **Skip a settling period** (the first few weeks)
 
-4. **Compute acceleration:** $s_j = \Delta_{j+1} - \Delta_j$
+4. **Read level, trend, and volatility** of $K$ over the remaining weeks
 
-5. **Test stability:**
-   - If $|s_j|$ stays bounded → stable fit
-   - If $|s_j|$ grows → unstable fit (burnout risk)
+5. **Describe the window:**
+   - Flat → no sign of rising adjustment so far
+   - Rising → adjustment is climbing (burnout risk)
+   - Accelerating → it is climbing faster over time
+
+6. **Auxiliary:** first-time readout levels $a_j$ and $s_j = \Delta_{j+1} - \Delta_j$, as a description of how new levels arrive
 
 ### Success Criteria
 
-- **Predictive validity:** Does Manhattan Distance at $t=0$ predict $s_j$ behavior?
-- **Phenomenological match:** Do people with unbounded $s_j$ report burnout?
-- **Actionable:** Can we intervene when $s_j$ starts growing?
+- **Predictive validity:** Does Manhattan Distance at $t=0$ predict the trend of $K$?
+- **Phenomenological match:** Do people whose $K$ rises report burnout?
+- **Actionable:** Can we intervene when $K$ starts rising?
 
 ---
 
 ## Open Questions
 
 1. **What's the "settling period"?**
-   - How long before $s_j$ behavior stabilizes?
+   - How long before $K$ settles enough to read a trend?
    - Does it vary by person, domain, or work type?
 
-2. **Can we predict $s_j$ from static features?**
-   - Does large Manhattan Distance → unbounded $s_j$?
-   - Or does small persistent distance → unbounded $s_j$?
+2. **Can we predict the trend of $K$ from static features?**
+   - Does large Manhattan Distance → rising $K$?
+   - Or does small persistent distance → rising $K$?
 
 3. **How do we operationalize "work-state readout" $K(i)$?**
    - Self-reported adjustment effort?
@@ -234,6 +306,14 @@ Benefit: Directly targets sustainability, not just initial fit.
 4. **Does this generalize across domains?**
    - Tech vs. healthcare vs. education
    - Different cultures, work structures
+
+5. **How noisy are real weekly answers?**
+   - The episode-count table assumes 0.5 points of noise per week
+   - Noisier answers need longer records before a trend can be read
+
+6. **What does a 0–10 scale hide?**
+   - Someone already near 10 can't report rising adjustment (a ceiling)
+   - People use scales differently; reading each person's own trend avoids some of this, but not the ceiling
 
 ---
 
@@ -265,6 +345,34 @@ The core insight — that fit is about whether disturbances dampen out or propag
 
 ---
 
+## Philosophical Constraints: The Trap of "Solving" People
+
+*Based on community discussion regarding the nature of this model.*
+
+### 1. Assumptions vs. Hypotheses
+
+This project does not follow the traditional scientific method (`Hypothesis → Test → Solve`) because human behavior is not a closed domain to be "solved."
+
+- **Hypotheses** seek a solution/outcome.
+- **Assumptions** act as alignment constraints.
+
+Phase 0 Simulation is **not** trying to prove a hypothesis (e.g., "prove Manhattan distance causes instability"). It is **visualizing an assumption** (e.g., "assuming Manhattan distance represents friction, what does instability look like?"). We refine the model not by solving it harder, but by keeping our assumptions disciplined.
+
+### 2. The Role of Time
+
+Time ($t$) must remain an **external lens**, not an internal formation variable.
+
+- **Wrong:** Injecting time into the vector formation loop (trying to predict how vectors change).
+- **Right:** Using time to observe the stability of the output (as the stability check does, reading $K$ against the episode index).
+
+If we import time too early, the model will drift undetectably.
+
+### 3. Drift is Not an Error
+
+When the model drifts (alignment degrades), we should not add more axioms or complex geometry to "fix" it. Drift points are moments to re-articulate descriptions. They reveal **Prime Events**—events that add no new data but are necessary to prevent system collapse.
+
+---
+
 ## Status
 
 **Current:** Theoretical model, not yet empirically tested.
@@ -275,24 +383,25 @@ The core insight — that fit is about whether disturbances dampen out or propag
 Before involving real people, validate the model computationally:
 
 1. **Generate synthetic trajectories:**
-   - Simulate stable fit: $|s_j| \le C$ (bounded noise)
-   - Simulate unstable fit: $|s_j|$ grows (compounding drift)
+   - Simulate stable fit: mean reversion around a fixed baseline
+   - Simulate unstable fit: a baseline that keeps rising (persistent drift), or rises faster and faster
 
-2. **Visualize $s_j$ behavior:**
-   - Plot adjustment acceleration over time
+2. **Visualize $K$ over time:**
+   - Read level, trend, and volatility, with first-arrival $s_j$ alongside
    - Identify visual signatures of stability vs. instability
 
-3. **Test Manhattan Distance correlation:**
-   - Does initial distance predict $s_j$ trajectory?
+3. **Check consistency between Static Distance assumptions and Dynamic Stability observations:**
+   - Does initial distance relate to $s_j$ trajectory patterns?
    - Generate 100s of synthetic person-work pairs
-   - Check if correlation hypothesis holds in simulation
+   - Observe if the assumption of friction holds in simulation
 
-**Why this matters:** Synthetic data lets us debug measurement protocols and test assumptions before involving humans.
+**Why this matters:** Synthetic data lets us debug measurement protocols and refine assumptions before involving humans.
 
 - **Outcomes:**
-  - ✅ Visualized signatures of stable vs. unstable trajectories ([See Graphs](#visualizing-the-theory-phase-0-simulation))
-  - ✅ Confirmed Manhattan Distance *can* theoretically predict $s_j$ behavior
-  - ✅ Established sensitivity range for quantize parameter (0.5 - 1.0)
+  - ✅ Visualized signatures of stable vs. unstable trajectories ([See Graphs](#visualizing-the-theory-phase-0-simulation)), revised November 2026 ([Correction](#correction-november-2026))
+  - ~~Observed consistency between Manhattan Distance assumptions and $s_j$ behavior~~ **Withdrawn (November 2026).** The simulation sets stability from distance by assumption, so any agreement between them is the assumption showing through, not an observation. Only real data can show it (Phase 3).
+  - ✅ Established sensitivity range for quantize parameter (0.5 - 1.0), for the auxiliary first-arrival measure only
+  - ✅ Time-based stability check (level, trend, volatility), with the Issue #4 examples as unit tests and an estimate of how many episodes it needs (Roadmap Experiment 2.4)
 
 👉 **Code:** `examples/stability_simulation.py`
 
@@ -303,26 +412,27 @@ Define how to measure $s_j$ with real people:
 
 - Weekly question: "How much did you adjust this week?" (0-10 scale)
 - Alternative metrics: Calendar changes, communication pattern shifts, self-reported friction
-- Operationalize "first-time-seen states" ($a_j$)
+- Read level, trend, and volatility of $K$ over time (done on synthetic data in Experiment 2.4), with "first-time-seen states" ($a_j$) as an auxiliary measure
 
 ---
 
 ### Phase 2: Pilot Study
-Small-scale test with consenting participants:
+Small-scale observation with consenting participants:
 
 - 10-20 people, 12 weeks
 - Track $K(i)$ weekly
-- Compute $s_j$ and test stability criterion
-- Correlate with qualitative burnout reports
+- Compute level, trend, and volatility of $K$ and observe stability patterns
+- 12 weeks is enough to measure how noisy the answers are and how many people keep answering, but at the synthetic noise level it is too short to sort people by trend
+- Compare with qualitative burnout reports
 
 ---
 
-### Phase 3: Validate Correlation
-Test whether Manhattan Distance predicts $s_j$:
+### Phase 3: Observe Consistency
+Observe whether Manhattan Distance assumptions align with $s_j$ patterns:
 
-- Compare initial alignment scores with 12-week $s_j$ trajectories
-- Check if hypothesis holds: large distance → unbounded $s_j$
+- Compare initial alignment scores with the trend of $K$
+- Observe if the assumption holds: large distance → rising $K$
 
 ---
 
-*Last updated: 2025*
+*Last updated: November 2026*
