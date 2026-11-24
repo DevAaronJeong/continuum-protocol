@@ -130,6 +130,15 @@ We don't know if all of these ideas are feasible, ethical, or even desirable. Bu
 
 **Hypothesis:** People whose fit feels wrong show rising $K$; people whose fit feels right settle.
 
+#### Experiment 2.7: Want vs. Have in Public Survey Data
+- The ISSP 2015 "Work Orientations" survey (about 51,700 people in 37 countries) asked how important job features are and whether people's own jobs have them
+- Does the distance between the two track job satisfaction and stress? Does Manhattan track it better than cosine?
+- Stability across 1989–2015, and a repeat on the 2025 wave when it's released (expected April 2027)
+- Countries outside the data, such as South Korea, are approximated by the surveyed countries they most resemble
+- Plan, written before the data is downloaded: [experiments/issp-want-vs-have.md](experiments/issp-want-vs-have.md)
+
+**Hypothesis:** The closer what people want is to what their job gives them, the more satisfied they are, and Manhattan tracks this at least as well as cosine.
+
 ### Deliverables:
 - [x] Synthetic data generator
 - [x] Multiple matching algorithm implementations (cosine, Manhattan, Euclidean, Chebyshev)
