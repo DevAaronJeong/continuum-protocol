@@ -24,7 +24,8 @@ There's no budget for paid respondents, so the survey stays open for months and 
 |---|---|
 | Nov 2, 2026 | First forms created by running `examples/survey_forms.gs` in Google Apps Script, for the pre-check (done) |
 | Nov 2–22 | Pre-check: two people answered the first forms online. Neither left a comment pointing to a problem, so the questions are unchanged. Their answers are not analyzed. (The original schedule had the survey opening on Nov 11; it slipped.) |
-| Nov 23 | The forms are created again from scratch so pre-check answers can't mix in, and the survey page is pointed at the new forms (done). After this, nothing in this plan, the forms, the survey page, or the analysis script changes. |
+| Nov 23 | The forms are created again from scratch so pre-check answers can't mix in, and the survey page is pointed at the new forms (done). |
+| Nov 24 | Survey page only, before opening: an example result on the start screen, a note beside the second-job question that the result will compare the two jobs, a two-job comparison and the date results will be published on the result screen, and a link-preview image. The questions, the forms, and the analysis are unchanged; the answers the page sends to the forms were checked to be identical before and after (done). After this, nothing in this plan, the forms, the survey page, or the analysis script changes. |
 | **Dec 1** | **Survey opens** |
 | First Monday of each month, from Jan 4, 2027 | Check the **number** of responses only (see Stopping) |
 | **Mar 31, 2027** | **Survey closes** at the latest, or earlier once there are 100 complete responses |
@@ -35,9 +36,9 @@ There's no budget for paid respondents, so the survey stays open for months and 
 ## Who takes part, and what that means
 
 - **Who:** adults who have worked at least one job (part-time and freelance count) for 3 months or more.
-- **How they're reached (all free):** shared by friends and their friends, GitHub Discussions, Korean online communities (where their rules allow surveys), [SurveyCircle](https://www.surveycircle.com), and Reddit r/SampleSize. Korean and English versions.
+- **How they're reached (all free):** at opening, the GitHub repository and its Discussions, Reddit r/SampleSize, and friends and their friends. Korean and English versions. Channels added later (for example Korean online communities where their rules allow surveys, or [SurveyCircle](https://www.surveycircle.com)) are recorded here with the date they were added.
 - **Target:** 100 complete responses, built up over the months the survey is open. Each project update posted on GitHub, X, or LinkedIn carries the survey link.
-- **Where people answer:** the survey page at https://devaaronjeong.github.io/continuum-protocol/survey/ ([`site/survey/`](../../site/survey/)). It asks the same questions in the same words as the Google Forms and sends the answers to them. After submitting, the page shows the person where they and their job are close and far apart on each dimension. **It appears only after the answers are sent, so it can't change them**, and it shows no overall score. Seeing their own comparison is also what gives people a reason to pass the survey on.
+- **Where people answer:** the survey page at https://devaaronjeong.github.io/continuum-protocol/survey/ ([`site/survey/`](../../site/survey/)). It asks the same questions in the same words as the Google Forms and sends the answers to them. After submitting, the page shows the person where they and their job are close and far apart on each dimension, and, if they described two jobs, which one sat closer to their rhythm and whether that matches how they rated the two. **It appears only after the answers are sent, so it can't change them**, and it shows no overall score. Seeing their own comparison is also what gives people a reason to pass the survey on.
 
 **Who this really describes.** People who choose to answer a survey about whether their work fits them are likely to have strong feelings about it, often because it doesn't. Paid survey panels have their own lean as well. So the result describes **people who sought out a survey like this**, not workers in general. That is close to the people this protocol is meant for: people looking for work that fits better. Results will be written up with that scope.
 

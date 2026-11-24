@@ -4,10 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>지금 하는 일, 내 리듬과 맞나요?</title>
-<meta name="description" content="나와 지금 하는 일을 다섯 가지 리듬으로 나란히 놓아 보는 10분 익명 설문. 다 하고 나면 어디가 가깝고 어디가 먼지 보여 드려요.">
-<meta property="og:title" content="지금 하는 일, 내 리듬과 맞나요?">
-<meta property="og:description" content="나와 일을 다섯 가지 리듬으로 나란히 놓아 보는 10분 익명 설문이에요.">
+<meta name="description" content="Does your work fit your rhythm? A 10-minute anonymous survey that sets you and your job side by side and shows where they're close and far apart. 나와 지금 하는 일의 리듬을 나란히 놓아 보는 10분 익명 설문.">
+<meta property="og:title" content="Does your work fit your rhythm? · 내 일, 내 리듬과 맞나요?">
+<meta property="og:description" content="A 10-minute anonymous survey. At the end you see where you and your job are close and where they're far apart. 다 하고 나면 나와 일의 리듬이 어디서 맞고 어디서 어긋나는지 보여 드려요.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://devaaronjeong.github.io/continuum-protocol/survey/">
+<meta property="og:image" content="https://devaaronjeong.github.io/continuum-protocol/survey/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Two dots on a line: you and your job, close on some rhythms and far apart on others.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
@@ -186,6 +192,19 @@ body.is-job { --accent: var(--job); --accent-fill: var(--job-fill); --accent-sof
 a { color: var(--me); text-underline-offset: 3px; }
 .note { font-size: .9375rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 1.25rem; margin-top: 2rem; }
 .share { margin-top: 1.5rem; }
+.hint { color: var(--muted); font-size: .9375rem; margin: -1.25rem 0 2.25rem; }
+.preview { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1rem .25rem; margin: 0 0 1.5rem; }
+.preview-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .75rem; }
+.preview-title { font-weight: 600; font-size: .9375rem; }
+.badge { font-size: .75rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .05rem .55rem; }
+.preview .dim { margin-bottom: 1rem; }
+.compare { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; margin: 0 0 1.5rem; }
+.compare h2 { font-size: 1.0625rem; margin-bottom: .6rem; }
+.compare-counts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: 0 0 .9rem; text-align: center; }
+.compare-counts div { border: 1px solid var(--line); border-radius: 10px; padding: .5rem .25rem; }
+.compare-counts strong { display: block; font-size: 1.5rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.compare-counts span { font-size: .8125rem; color: var(--muted); }
+.compare p:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -213,8 +232,12 @@ a { color: var(--me); text-underline-offset: 3px; }
         "약 10분 걸립니다. 언제든 그만둘 수 있고, 제출하기 전에는 아무것도 저장되지 않습니다.",
         "요약 결과만 공개합니다. 개별 응답은 공개하지 않습니다.",
         "나중에 응답을 지우고 싶을 수도 있다면, 마지막에 나만 아는 암호 단어를 정해 두세요.",
-        "참여 대상: 만 18세 이상이고, 한 가지 이상의 일(아르바이트·프리랜서 포함)을 3개월 이상 해 본 분."
+        "참여 대상: 만 18세 이상이고, 한 가지 이상의 일(아르바이트·프리랜서 포함)을 3개월 이상 해 본 분.",
+        "전체 결과 요약은 2027년 4월에 프로젝트 페이지에 공개해요."
       ],
+      previewTitle: "끝나면 이런 걸 보여 드려요",
+      previewBadge: "예시",
+      gateHint: "두 번째 일까지 답하면, 결과에서 두 일 중 어느 쪽이 내 리듬에 더 가까웠는지도 비교해 드려요.",
       about: "이 설문은 오픈소스 프로젝트 continuum-protocol의 일부입니다. 이 프로젝트는 일이 사람의 능력뿐 아니라 생활의 리듬과도 맞는지를 탐구합니다.",
       start: "설문 시작하기",
       next: "다음", back: "이전",
@@ -247,6 +270,18 @@ a { color: var(--me); text-underline-offset: 3px; }
       },
       allClose: "네 가지 모두 두 칸 이내로 가까워요. 리듬 차이가 크지 않은 일이에요.",
       closest: function (name, me, job) { return "가장 가까운 곳은 " + ko("'" + name + "'", "이에요", "예요") + " (나 " + me + ", 일 " + job + ")."; },
+      closestSame: function (name, v) { return ko("'" + name + "'", "은", "는") + " 딱 맞아요 (둘 다 " + v + ")."; },
+      closestFar: function (name, gap) { return "가장 가까운 " + ko("'" + name + "'", "도", "도") + " " + gap + "칸 떨어져 있어요. 네 가지 모두 차이가 큰 편이에요."; },
+      compareTitle: "두 일, 어느 쪽이 내 리듬에 더 가까웠을까?",
+      compareA: "첫 번째 일이 더 가까움", compareB: "두 번째 일이 더 가까움", compareTie: "같음",
+      compareFit: function (a, b) { return "직접 고른 '내 생활 방식과 맞았던 정도'는 첫 번째 일 " + a + "점, 두 번째 일 " + b + "점(7점 만점)이었어요."; },
+      compareAgree: function (which) { return "더 잘 맞았다고 느낀 " + which + "이 리듬도 더 가까웠어요. 이 프로젝트가 확인하려는 바로 그 관계예요."; },
+      compareDisagree: function (which) { return "더 잘 맞았다고 느낀 " + which + "이 오히려 리듬은 더 멀었어요. 리듬 말고 다른 것(사람, 일의 의미, 보상 같은)이 더 크게 작용했을 수 있어요. 이런 답도 이 연구에 꼭 필요해요."; },
+      compareCloserOnly: function (which) { return "리듬은 " + which + "이 더 가까웠는데, 맞는 정도는 두 일을 같게 골랐어요."; },
+      compareBetterOnly: function (which) { return which + "을 더 잘 맞았다고 골랐지만, 리듬 거리는 두 일이 비슷했어요."; },
+      compareBothEven: "리듬 거리도, 맞는 정도도 두 일이 비슷했어요.",
+      jobNameA: "첫 번째 일", jobNameB: "두 번째 일",
+      resultsLater: "전체 결과 요약은 2027년 4월에 공개해요.",
       energySame: function (v) { return "에너지가 몰리는 때도 같아요: " + v + "."; },
       energyBothVary: "에너지가 몰리는 때는 나도, 이 일도 그때그때 달라요.",
       energyVaries: function (me, job) { return "에너지 시간대는 나 '" + me + "', 일 " + ko("'" + job + "'", "이에요", "예요") + ". 한쪽이 그때그때 달라서 차이가 크지 않을 수 있어요."; },
@@ -255,7 +290,7 @@ a { color: var(--me); text-underline-offset: 3px; }
       caveat: "이 비교는 continuum-protocol이 아직 검증하고 있는 방식이에요. 지금 하신 응답이 바로 그 검증에 쓰여요. 같은 사람이라도 시기에 따라 리듬은 달라질 수 있어요.",
       shareTitle: "주변에도 물어봐 주세요",
       shareText: "다양한 사람이 답할수록 이 비교가 실제 경험과 맞는지 더 잘 알 수 있어요.",
-      share: "설문 링크 공유하기",
+      share: "설문 공유하기",
       copied: "링크를 복사했어요",
       deletionWith: function (word) { return "나중에 응답을 지우고 싶으면, 삭제 요청 양식에 암호 단어 " + ko("'" + word + "'", "을", "를") + " 입력하세요."; },
       deletionWithout: "암호 단어를 정하지 않아서, 이 응답은 나중에 골라서 지울 수 없어요.",
@@ -273,8 +308,12 @@ a { color: var(--me); text-underline-offset: 3px; }
         "About 10 minutes. You can stop at any point. Nothing is saved until you submit.",
         "Only summary results are published. Individual answers are never posted.",
         "If you might want your answer deleted later, choose a code word at the end.",
-        "Who can take part: you're 18 or older and have worked at least one job (part-time and freelance count) for 3 months or more."
+        "Who can take part: you're 18 or older and have worked at least one job (part-time and freelance count) for 3 months or more.",
+        "A summary of all results will be posted on the project page in April 2027."
       ],
+      previewTitle: "What you'll see at the end",
+      previewBadge: "Example",
+      gateHint: "If you add a second job, your result will also show which of the two sat closer to your rhythm.",
       about: "This survey is part of continuum-protocol, an open-source project that asks whether jobs fit people's rhythms of living, not just their skills.",
       start: "Start the survey",
       next: "Next", back: "Back",
@@ -307,6 +346,18 @@ a { color: var(--me); text-underline-offset: 3px; }
       },
       allClose: "All four are within two steps of each other. The rhythm gap with this job is small.",
       closest: function (name, me, job) { return "The closest match is " + name.toLowerCase() + " (you " + me + ", job " + job + ")."; },
+      closestSame: function (name, v) { return name + " is an exact match (both at " + v + ")."; },
+      closestFar: function (name, gap) { return "Even the closest one, " + name.toLowerCase() + ", is " + gap + " steps apart. All four gaps are on the large side."; },
+      compareTitle: "Which job sat closer to your rhythm?",
+      compareA: "first job closer", compareB: "second job closer", compareTie: "even",
+      compareFit: function (a, b) { return "You rated how well each fit the way you live at " + a + " (first job) and " + b + " (second job) out of 7."; },
+      compareAgree: function (which) { return "The job you said fit better, your " + which + ", was also closer in rhythm. That's exactly the link this project is testing."; },
+      compareDisagree: function (which) { return "The job you said fit better, your " + which + ", was actually further from your rhythm. Something other than rhythm (the people, the meaning, the pay) may have mattered more. Answers like this matter to the study just as much."; },
+      compareCloserOnly: function (which) { return "Your " + which + " was closer in rhythm, but you rated both as fitting equally well."; },
+      compareBetterOnly: function (which) { return "You rated your " + which + " as the better fit, but the two were about equally close in rhythm."; },
+      compareBothEven: "The two jobs were about equally close in rhythm, and you rated them the same.",
+      jobNameA: "first job", jobNameB: "second job",
+      resultsLater: "A summary of all results will be posted in April 2027.",
       energySame: function (v) { return "Your energy peaks at the same time, too: " + v.toLowerCase() + "."; },
       energyBothVary: "Both your energy and this job's demands vary across the day.",
       energyVaries: function (me, job) { return "Energy timing: you “" + me.toLowerCase() + "”, the job “" + job.toLowerCase() + "”. One of them varies, so the gap may be small."; },
@@ -315,7 +366,7 @@ a { color: var(--me); text-underline-offset: 3px; }
       caveat: "This comparison is the method continuum-protocol is still testing, and your answers are part of that test. The same person's rhythm can change over time.",
       shareTitle: "Ask a few others too",
       shareText: "The more kinds of people answer, the better we can tell whether this comparison matches real experience.",
-      share: "Share the survey link",
+      share: "Share the survey",
       copied: "Link copied",
       deletionWith: function (word) { return "To delete your answer later, enter your code word “" + word + "” in the deletion form."; },
       deletionWithout: "You didn't choose a code word, so this answer can't be picked out and deleted later.",
@@ -406,6 +457,18 @@ a { color: var(--me); text-underline-offset: 3px; }
     return s;
   }
 
+  function preview() {
+    var box = el("div", { "class": "preview", "aria-label": t().previewTitle + " (" + t().previewBadge + ")" }, [
+      el("div", { "class": "preview-head" }, [
+        el("span", { "class": "preview-title", text: t().previewTitle }),
+        el("span", { "class": "badge", text: t().previewBadge })
+      ])
+    ]);
+    box.appendChild(track({ id: "pace", me: 2, job: 8 }, true));
+    box.appendChild(track({ id: "people", me: 3, job: 4 }, false));
+    return box;
+  }
+
   function renderStart() {
     var consentQ = q("consent");
     var box = el("input", { type: "checkbox", id: "consent" });
@@ -414,6 +477,7 @@ a { color: var(--me); text-underline-offset: 3px; }
     app.appendChild(walkers());
     app.appendChild(el("h1", { text: t().title }));
     app.appendChild(el("p", { "class": "lead", text: t().lead }));
+    app.appendChild(preview());
     app.appendChild(el("p", { "class": "muted", text: t().about }));
     app.appendChild(el("ul", { "class": "facts" }, t().facts.map(function (f) { return el("li", { text: f }); })));
     app.appendChild(el("label", { "class": "option consent", "for": "consent" }, [box, el("span", { text: consentQ[lang] })]));
@@ -492,7 +556,10 @@ a { color: var(--me); text-underline-offset: 3px; }
     app.appendChild(el("h2", { text: meta[0] }));
     if (meta[1]) { app.appendChild(el("p", { "class": "page-help", text: meta[1] })); }
     var form = el("div");
-    questionsOn(page).forEach(function (x) { form.appendChild(questionField(x)); });
+    questionsOn(page).forEach(function (x) {
+      form.appendChild(questionField(x));
+      if (x.type === "gate") { form.appendChild(el("p", { "class": "hint", text: t().gateHint })); }
+    });
     app.appendChild(form);
     var err = el("p", { "class": "error", role: "alert" });
     var isLast = pageIndex === pages.length - 1;
@@ -565,9 +632,10 @@ a { color: var(--me); text-underline-offset: 3px; }
       el("span", { "class": "dim-name", text: t().dims[row.id] }),
       el("span", { "class": "dim-values", text: t().values(row.me, row.job) })
     ]));
-    var s = svg("svg", { viewBox: "0 0 300 34", preserveAspectRatio: "none", role: "img", "aria-label": t().dims[row.id] + ": " + t().values(row.me, row.job) });
-    var x = function (v) { return 12 + v * 27.6; };
-    s.appendChild(svg("line", { "class": "track", x1: 12, y1: 17, x2: 288, y2: 17 }));
+    // Positions are percentages of the width, so the dots stay round at any screen size.
+    var s = svg("svg", { role: "img", "aria-label": t().dims[row.id] + ": " + t().values(row.me, row.job) });
+    var x = function (v) { return (4 + v * 9.2).toFixed(1) + "%"; };
+    s.appendChild(svg("line", { "class": "track", x1: "4%", y1: 17, x2: "96%", y2: 17 }));
     s.appendChild(svg("line", { "class": "gap", x1: x(row.me), y1: 17, x2: x(row.job), y2: 17 }));
     s.appendChild(svg("circle", { "class": "job", cx: x(row.job), cy: 17, r: 8 }));
     s.appendChild(svg("circle", { "class": "me", cx: x(row.me), cy: 17, r: row.me === row.job ? 4.5 : 7 }));
@@ -576,9 +644,37 @@ a { color: var(--me); text-underline-offset: 3px; }
     return wrap;
   }
 
+  function compareJobs() {
+    var counts = { a: 0, b: 0, tie: 0 };
+    DIMS.forEach(function (d) {
+      var me = answers["self_" + d];
+      var ga = Math.abs(answers["a_" + d] - me), gb = Math.abs(answers["b_" + d] - me);
+      counts[ga < gb ? "a" : gb < ga ? "b" : "tie"] += 1;
+    });
+    var closer = counts.a > counts.b ? "a" : counts.b > counts.a ? "b" : null;
+    var fitA = answers.a_fit, fitB = answers.b_fit;
+    var better = fitA > fitB ? "a" : fitB > fitA ? "b" : null;
+    var box = el("div", { "class": "compare" }, [el("h2", { text: t().compareTitle })]);
+    box.appendChild(el("div", { "class": "compare-counts" }, [
+      el("div", {}, [el("strong", { text: String(counts.a) }), el("span", { text: t().compareA })]),
+      el("div", {}, [el("strong", { text: String(counts.b) }), el("span", { text: t().compareB })]),
+      el("div", {}, [el("strong", { text: String(counts.tie) }), el("span", { text: t().compareTie })])
+    ]));
+    box.appendChild(el("p", { text: t().compareFit(fitA, fitB) }));
+    var name = function (job) { return job === "a" ? t().jobNameA : t().jobNameB; };
+    var line;
+    if (closer && better) { line = closer === better ? t().compareAgree(name(better)) : t().compareDisagree(name(better)); }
+    else if (closer) { line = t().compareCloserOnly(name(closer)); }
+    else if (better) { line = t().compareBetterOnly(name(better)); }
+    else { line = t().compareBothEven; }
+    box.appendChild(el("p", { text: line }));
+    return box;
+  }
+
   function renderResult() {
     app.appendChild(el("h1", { text: t().resultTitle }));
     app.appendChild(el("p", { "class": "lead", text: t().resultLead }));
+    if (optedIn()) { app.appendChild(compareJobs()); }
     if (optedIn()) {
       var tabs = el("div", { "class": "tabs", role: "tablist" });
       [["a", t().firstJob], ["b", t().secondJob]].forEach(function (tab) {
@@ -591,7 +687,11 @@ a { color: var(--me); text-underline-offset: 3px; }
     if (c.farthest.gap >= 3) {
       var toward = t().ends[c.farthest.id][c.farthest.job > c.farthest.me ? 1 : 0];
       summary.appendChild(el("p", { text: t().farthest(t().dims[c.farthest.id], c.farthest.me, c.farthest.job, toward) }));
-      summary.appendChild(el("p", { text: t().closest(t().dims[c.closest.id], c.closest.me, c.closest.job) }));
+      var closestName = t().dims[c.closest.id];
+      var closestText = c.closest.gap === 0 ? t().closestSame(closestName, c.closest.me)
+        : c.closest.gap >= 3 ? t().closestFar(closestName, c.closest.gap)
+        : t().closest(closestName, c.closest.me, c.closest.job);
+      summary.appendChild(el("p", { text: closestText }));
     } else {
       summary.appendChild(el("p", { text: t().allClose }));
     }
@@ -612,6 +712,7 @@ a { color: var(--me); text-underline-offset: 3px; }
 
     var note = el("div", { "class": "note" });
     note.appendChild(el("p", { text: t().caveat }));
+    note.appendChild(el("p", {}, [t().resultsLater + " ", el("a", { href: "https://github.com/DevAaronJeong/continuum-protocol", target: "_blank", rel: "noopener", text: t().project })]));
     var word = (answers.code_word || "").trim();
     var del = el("p", {}, [word ? t().deletionWith(word) : t().deletionWithout]);
     if (word) { del.appendChild(document.createTextNode(" ")); del.appendChild(el("a", { href: S.deletionForm, target: "_blank", rel: "noopener", text: t().deletionLink })); }

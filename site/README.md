@@ -18,7 +18,8 @@ GitHub Pages serves the `gh-pages` branch root (Settings → Pages → Deploy fr
 The Experiment 2.5 survey page: https://devaaronjeong.github.io/continuum-protocol/survey/
 
 - Asks the same questions, in the same words, as the Google Forms created by `examples/survey_forms.gs`, and sends the answers to those forms. Nothing else is collected and there is no analytics.
-- After submitting, it shows the person where they and their job are close and far apart on each dimension. There is no overall score.
+- After submitting, it shows the person where they and their job are close and far apart on each dimension. If they described two jobs, it also shows which one sat closer to their rhythm and whether that matches how they rated the two. There is no overall score.
+- The start screen shows a small example of that result, and `og.png` is the image shown when the link is shared.
 - Korean and English. Add `?lang=ko` or `?lang=en` to the link to pick one.
 
 ### When the forms are re-created
